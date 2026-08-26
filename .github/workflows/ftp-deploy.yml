@@ -1,0 +1,35 @@
+name: Deploy to InfinityFree via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    # ⚠️ WARNING: InfinityFree does not support Node.js.
+    # This action will only upload the raw source files. 
+    # A Next.js application with a Prisma database will NOT run on InfinityFree.
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ftpupload.net
+        username: if0_42755715
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 21
+        # It's recommended to upload to the htdocs folder in InfinityFree
+        server-dir: /htdocs/
+        # Exclude files you don't want to upload
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/.env*
+          **/.next/**
