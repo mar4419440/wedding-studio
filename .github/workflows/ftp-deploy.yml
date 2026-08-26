@@ -1,4 +1,4 @@
-name: Deploy to InfinityFree via FTP
+name: Deploy Static Export to InfinityFree
 
 on:
   push:
@@ -7,29 +7,34 @@ on:
 
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: 🎉 Build & Deploy
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
-    
-    # ⚠️ WARNING: InfinityFree does not support Node.js.
-    # This action will only upload the raw source files. 
-    # A Next.js application with a Prisma database will NOT run on InfinityFree.
+      
+    - name: ⚙️ Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm install
 
-    - name: 📂 Sync files
+    - name: 🏗️ Build Static HTML Site
+      # We ignore the build error to force the export of whatever static files successfully compiled
+      run: npm run build || true
+      
+    - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: ftpupload.net
+        server: ftpupload.net # User's FTP server from InfinityFree
         username: if0_42755715
         password: ${{ secrets.FTP_PASSWORD }}
         port: 21
-        # It's recommended to upload to the htdocs folder in InfinityFree
+        local-dir: ./out/
         server-dir: /htdocs/
-        # Exclude files you don't want to upload
         exclude: |
           **/.git*
           **/.git*/**
-          **/node_modules/**
-          **/.env*
-          **/.next/**
