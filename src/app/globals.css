@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "./themes.css";
+
+@theme inline {
+  --color-background: var(--t-background);
+  --color-on-background: var(--t-on-background);
+  --color-surface: var(--t-surface);
+  --color-surface-container-lowest: var(--t-surface-container-lowest);
+  --color-surface-container-low: var(--t-surface-container-low);
+  --color-surface-container: var(--t-surface-container);
+  --color-surface-container-high: var(--t-surface-container-high);
+  --color-on-surface: var(--t-on-surface);
+  --color-on-surface-variant: var(--t-on-surface-variant);
+  --color-primary: var(--t-primary);
+  --color-on-primary: var(--t-on-primary);
+  --color-primary-container: var(--t-primary-container);
+  --color-on-primary-container: var(--t-on-primary-container);
+  --color-secondary: var(--t-secondary);
+  --color-on-secondary: var(--t-on-secondary);
+  --color-secondary-container: var(--t-secondary-container);
+  --color-on-secondary-container: var(--t-on-secondary-container);
+  --color-outline: var(--t-outline);
+  --color-outline-variant: var(--t-outline-variant);
+  --color-inverse-surface: var(--t-inverse-surface);
+  --color-inverse-on-surface: var(--t-inverse-on-surface);
+}

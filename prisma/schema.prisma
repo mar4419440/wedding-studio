@@ -1,0 +1,53 @@
+// Prisma schema — Bilingual Wedding Platform
+// MySQL (XAMPP) via mysql provider
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Family {
+  id          String    @id @default(uuid())
+  nameAr      String    @db.VarChar(191)
+  nameEn      String    @db.VarChar(191)
+  phone       String?   @db.VarChar(32)
+  guestCount  Int       @default(1)
+  rsvpStatus  String    @default("PENDING") @db.VarChar(16) // PENDING | CONFIRMED | DECLINED
+  checkedIn   Boolean   @default(false)
+  checkedInAt DateTime?
+  qrCodeData  String?   @db.Text
+  inviteUrl   String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([rsvpStatus])
+  @@index([checkedIn])
+}
+
+model Setting {
+  key   String @id @db.VarChar(64)
+  value String @db.Text
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  kind      String   @default("gallery") @db.VarChar(16) // gallery | story
+  url       String   @db.VarChar(512)
+  mediaType String   @default("image") @db.VarChar(16) // image | video
+  captionAr String?  @db.VarChar(255)
+  captionEn String?  @db.VarChar(255)
+  titleAr   String?  @db.VarChar(191)
+  titleEn   String?  @db.VarChar(191)
+  bodyAr    String?  @db.Text
+  bodyEn    String?  @db.Text
+  dateLabel String?  @db.VarChar(64)
+  eventTag  String?  @db.VarChar(32) // engagement | henna | wedding | other
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([kind, order])
+}

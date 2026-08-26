@@ -1,0 +1,645 @@
+/* ============================================================
+   Wedding Theme System — the 6 Stitch suite designs
+   (stitch_elegant_bilingual_wedding_suite)
+
+   Tokens per [data-theme="…"] on <html>. Shared classes live
+   in themes-base.css. RTL/Arabic overrides at the bottom win
+   over everything (Amiri calligraphy).
+   ============================================================ */
+
+@import "./themes-base.css";
+
+/* ---------- Defaults (= ethereal-union-1) ---------- */
+:root {
+  --t-background: #faf9f9;
+  --t-on-background: #1b1c1c;
+  --t-surface: #faf9f9;
+  --t-surface-container-lowest: #ffffff;
+  --t-surface-container-low: #f4f3f3;
+  --t-surface-container: #efeded;
+  --t-surface-container-high: #e9e8e8;
+  --t-on-surface: #1b1c1c;
+  --t-on-surface-variant: #4d4635;
+  --t-primary: #735c00;
+  --t-on-primary: #ffffff;
+  --t-primary-container: #d4af37;
+  --t-on-primary-container: #554300;
+  --t-secondary: #5f5e5e;
+  --t-on-secondary: #ffffff;
+  --t-secondary-container: #e4e2e1;
+  --t-on-secondary-container: #656464;
+  --t-tertiary: #5f5f59;
+  --t-outline: #7f7663;
+  --t-outline-variant: #d0c5af;
+  --t-inverse-surface: #2f3031;
+  --t-inverse-on-surface: #f2f0f0;
+
+  --t-font-display: var(--font-garamond), serif;
+  --t-font-script: var(--font-garamond), serif;
+  --t-font-body: var(--font-source-serif), serif;
+  --t-font-label: var(--font-source-serif), serif;
+
+  --t-display-size: 3rem;          /* 48px */
+  --t-display-size-sm: 2.25rem;    /* 36px */
+  --t-display-lh: 1.16;
+  --t-display-lh-sm: 1.22;
+  --t-display-weight: 400;
+  --t-display-tracking: -0.02em;
+  --t-headline-size: 2rem;
+  --t-headline-weight: 400;
+  --t-body-lg-size: 1.125rem;
+  --t-body-lg-lh: 1.55;
+  --t-label-weight: 600;
+  --t-label-spacing: 0.1em;
+
+  --t-radius-btn: 0;
+  --t-radius-card: 0;
+  --t-radius-image: 0;
+  --t-radius-input: 0;
+  --t-radius-chip: 0;
+  --t-shadow-card: none;
+  --t-card-border: 1px solid var(--t-primary-container);
+  --t-image-border: none;
+
+  --btn-bg: var(--t-inverse-surface);
+  --btn-fg: var(--t-inverse-on-surface);
+  --btn-border: var(--t-primary-container);
+  --btn-hover-bg: transparent;
+  --btn-hover-fg: var(--t-primary);
+
+  --input-bg: transparent;
+  --input-border-color: var(--t-primary-container);
+  --input-border-width: 0 0 1px 0;
+  --input-focus-color: var(--t-primary-container);
+
+  --t-divider-color: var(--t-primary-container);
+  --t-divider-glyph: "◆";
+  --t-divider-thickness: 1px;
+  --t-section-gap: 128px;
+  --t-container-max: 1140px;
+
+  --header-bg: color-mix(in srgb, var(--t-background) 85%, transparent);
+  --chip-bg: color-mix(in srgb, var(--t-secondary) 12%, transparent);
+  --chip-fg: var(--t-on-surface-variant);
+
+  --hero-overlay-a: color-mix(in srgb, var(--t-background) 55%, transparent);
+  --hero-overlay-b: color-mix(in srgb, var(--t-background) 88%, transparent);
+}
+
+/* ============================================================
+   1. ETHEREAL UNION I — ivory & gold hairline minimalism
+   ============================================================ */
+[data-theme="ethereal-union-1"] { /* inherits :root defaults */ }
+
+/* ============================================================
+   2. ETHEREAL UNION II — modern romanticism, blush & rose gold
+   ============================================================ */
+[data-theme="ethereal-union-2"] {
+  --t-background: #fbf9f8;
+  --t-on-background: #1b1c1c;
+  --t-surface: #fbf9f8;
+  --t-surface-container-lowest: #ffffff;
+  --t-surface-container-low: #f6f3f2;
+  --t-surface-container: #f0eded;
+  --t-surface-container-high: #eae8e7;
+  --t-on-surface: #1b1c1c;
+  --t-on-surface-variant: #4d4546;
+  --t-primary: #8c4b55;
+  --t-on-primary: #ffffff;
+  --t-primary-container: #f5e6e8;
+  --t-on-primary-container: #7a3c46;
+  --t-secondary: #8c4b55;
+  --t-on-secondary: #ffffff;
+  --t-secondary-container: #feaab6;
+  --t-on-secondary-container: #7a3c46;
+  --t-tertiary: #615e5e;
+  --t-outline: #7f7576;
+  --t-outline-variant: #d0c3c5;
+  --t-inverse-surface: #303030;
+  --t-inverse-on-surface: #f3f0f0;
+
+  --t-font-display: var(--font-playfair), serif;
+  --t-font-script: var(--font-playfair), serif;
+  --t-font-body: var(--font-playfair), serif;
+  --t-font-label: var(--font-jakarta), sans-serif;
+
+  --t-display-size: 3rem;
+  --t-display-size-sm: 2rem;
+  --t-display-lh: 1.16;
+  --t-display-lh-sm: 1.25;
+  --t-display-weight: 700;
+  --t-headline-size: 2rem;
+  --t-headline-weight: 600;
+  --t-body-lg-size: 1.125rem;
+  --t-body-lg-lh: 1.6;
+  --t-label-weight: 500;
+  --t-label-spacing: 0.05em;
+
+  --t-radius-btn: 1rem;
+  --t-radius-card: 1.5rem;
+  --t-radius-image: 1rem;
+  --t-radius-input: 0.75rem;
+  --t-radius-chip: 9999px;
+  --t-shadow-card: 0 10px 30px rgba(183, 110, 121, 0.15);
+  --t-card-border: none;
+
+  --btn-bg: var(--t-primary);
+  --btn-fg: var(--t-on-primary);
+  --btn-border: transparent;
+  --btn-hover-bg: var(--t-on-primary-container);
+  --btn-hover-fg: #ffffff;
+
+  --input-bg: color-mix(in srgb, var(--t-primary-container) 60%, #ffffff);
+  --input-border-color: var(--t-primary-container);
+  --input-focus-color: var(--t-primary);
+
+  --t-divider-color: rgba(183, 110, 121, 0.6);
+  --t-divider-glyph: "❀";
+  --t-section-gap: 120px;
+  --t-container-max: 1200px;
+
+  --hero-overlay-a: color-mix(in srgb, var(--t-primary-container) 40%, #fffdfdfd);
+  --hero-overlay-b: color-mix(in srgb, var(--t-primary-container) 55%, var(--t-background));
+}
+
+/* ============================================================
+   3. EMERALD & GILT — mashrabiya geometry, gold leaf frames
+   ============================================================ */
+[data-theme="emerald-gilt"] {
+  --t-background: #fff8f5;
+  --t-on-background: #1e1b18;
+  --t-surface: #fff8f5;
+  --t-surface-container-lowest: #ffffff;
+  --t-surface-container-low: #fbf2ed;
+  --t-surface-container: #f5ece7;
+  --t-surface-container-high: #efe6e2;
+  --t-on-surface: #1e1b18;
+  --t-on-surface-variant: #404943;
+  --t-primary: #002819;
+  --t-on-primary: #ffffff;
+  --t-primary-container: #06402b;
+  --t-on-primary-container: #fed65b;
+  --t-secondary: #735c00;
+  --t-on-secondary: #ffffff;
+  --t-secondary-container: #fed65b;
+  --t-on-secondary-container: #745c00;
+  --t-tertiary: #21231a;
+  --t-outline: #717973;
+  --t-outline-variant: #c0c9c1;
+  --t-inverse-surface: #34302c;
+  --t-inverse-on-surface: #f8efea;
+
+  --t-font-display: var(--font-playfair), serif;
+  --t-font-script: var(--font-amiri), serif;
+  --t-font-body: var(--font-noto-serif), serif;
+  --t-font-label: var(--font-playfair), serif;
+
+  --t-display-size: 3rem;
+  --t-display-size-sm: 2rem;
+  --t-display-lh: 1.16;
+  --t-display-weight: 700;
+  --t-headline-size: 2rem;
+  --t-headline-weight: 600;
+  --t-body-lg-size: 1.125rem;
+  --t-body-lg-lh: 1.55;
+  --t-label-weight: 600;
+  --t-label-spacing: 0.1em;
+
+  --t-radius-btn: 0;
+  --t-radius-card: 0;
+  --t-radius-image: 0;
+  --t-radius-input: 0;
+  --t-radius-chip: 0;
+  --t-shadow-card: none;
+  --t-card-border: 1px solid #d4af37;
+  --t-image-border: 1px solid #d4af37;
+
+  --btn-bg: var(--t-primary-container);
+  --btn-fg: var(--t-on-primary-container);
+  --btn-border: #d4af37;
+  --btn-hover-bg: var(--t-primary);
+  --btn-hover-fg: #ffe088;
+
+  --input-bg: transparent;
+  --input-border-color: #d4af37;
+  --input-focus-color: #b8860b;
+
+  --t-divider-color: #d4af37;
+  --t-divider-glyph: "✦";
+  --t-section-gap: 120px;
+  --t-container-max: 1200px;
+
+  --chip-bg: transparent;
+  --chip-fg: #b8860b;
+}
+
+/* ============================================================
+   4. PAPER & TERRACOTTA — editorial ink, Mediterranean spark
+   ============================================================ */
+[data-theme="paper-terracotta"] {
+  --t-background: #f9f9f9;
+  --t-on-background: #1a1c1c;
+  --t-surface: #f9f9f9;
+  --t-surface-container-lowest: #ffffff;
+  --t-surface-container-low: #f3f3f4;
+  --t-surface-container: #eeeeee;
+  --t-surface-container-high: #e8e8e8;
+  --t-on-surface: #1a1c1c;
+  --t-on-surface-variant: #4c4546;
+  --t-primary: #000000;
+  --t-on-primary: #ffffff;
+  --t-primary-container: #1b1b1b;
+  --t-on-primary-container: #ffffff;
+  --t-secondary: #9f402d;
+  --t-on-secondary: #ffffff;
+  --t-secondary-container: #fd876f;
+  --t-on-secondary-container: #732010;
+  --t-tertiary: #000000;
+  --t-outline: #7e7576;
+  --t-outline-variant: #cfc4c5;
+  --t-inverse-surface: #2f3131;
+  --t-inverse-on-surface: #f0f1f1;
+
+  --t-font-display: var(--font-playfair), serif;
+  --t-font-script: var(--font-playfair), serif;
+  --t-font-body: var(--font-inter), sans-serif;
+  --t-font-label: var(--font-inter), sans-serif;
+
+  --t-display-size: clamp(3rem, 6.5vw, 5.25rem);   /* up to 84px */
+  --t-display-size-sm: 3rem;                        /* 48px */
+  --t-display-lh: 1.05;
+  --t-display-lh-sm: 1.12;
+  --t-display-weight: 700;
+  --t-headline-size: 3rem;                          /* 48px */
+  --t-headline-weight: 600;
+  --t-body-lg-size: 1.125rem;
+  --t-body-lg-lh: 1.65;
+  --t-label-weight: 700;
+
+  --t-radius-btn: 0;
+  --t-radius-card: 0;
+  --t-radius-image: 0;
+  --t-radius-input: 0;
+  --t-radius-chip: 0;
+  --t-shadow-card: none;
+  --t-card-border: 1.5px solid var(--t-on-background);
+  --t-image-border: none;
+
+  --btn-bg: var(--t-primary);
+  --btn-fg: var(--t-on-primary);
+  --btn-border: var(--t-primary);
+  --btn-hover-bg: var(--t-secondary);
+  --btn-hover-fg: var(--t-on-secondary);
+
+  --input-bg: transparent;
+  --input-border-color: var(--t-on-background);
+  --input-focus-color: var(--t-secondary);
+
+  --t-divider-color: var(--t-on-background);
+  --t-divider-glyph: "";
+  --t-divider-thickness: 3px;
+  --t-section-gap: 160px;
+  --t-container-max: 1280px;
+
+  --chip-bg: transparent;
+  --chip-fg: var(--t-on-background);
+}
+
+/* ============================================================
+   5. BOTANICAL HEARTH — modern-bohemian scrapbook & sage
+   ============================================================ */
+[data-theme="botanical-hearth"] {
+  --t-background: #fcf9f4;
+  --t-on-background: #1c1c19;
+  --t-surface: #fcf9f4;
+  --t-surface-container-lowest: #ffffff;
+  --t-surface-container-low: #f6f3ee;
+  --t-surface-container: #f0ede9;
+  --t-surface-container-high: #ebe8e3;
+  --t-on-surface: #1c1c19;
+  --t-on-surface-variant: #564338;
+  --t-primary: #974400;
+  --t-on-primary: #ffffff;
+  --t-primary-container: #bb5808;
+  --t-on-primary-container: #fffbff;
+  --t-secondary: #8d4f11;
+  --t-on-secondary: #ffffff;
+  --t-secondary-container: #feac67;
+  --t-on-secondary-container: #773e00;
+  --t-tertiary: #3c653f;
+  --t-outline: #8a7266;
+  --t-outline-variant: #ddc1b3;
+  --t-inverse-surface: #31302d;
+  --t-inverse-on-surface: #f3f0eb;
+
+  --t-font-display: var(--font-playfair), serif;
+  --t-font-script: var(--font-playfair), serif;
+  --t-font-body: var(--font-jakarta), sans-serif;
+  --t-font-label: var(--font-jakarta), sans-serif;
+
+  --t-display-size: 3rem;
+  --t-display-size-sm: 2.25rem;
+  --t-display-lh: 1.16;
+  --t-display-lh-sm: 1.22;
+  --t-display-weight: 700;
+  --t-headline-size: 2rem;
+  --t-headline-weight: 600;
+  --t-body-lg-size: 1.125rem;
+  --t-body-lg-lh: 1.55;
+  --t-label-weight: 700;
+
+  --t-radius-btn: 1rem;
+  --t-radius-card: 2rem;
+  --t-radius-image: 2rem;
+  --t-radius-input: 1rem;
+  --t-radius-chip: 9999px;
+  --t-shadow-card: 0 18px 40px rgba(151, 68, 0, 0.14);
+  --t-card-border: 1px solid var(--t-outline-variant);
+  --t-image-border: none;
+
+  --btn-bg: var(--t-primary);
+  --btn-fg: var(--t-on-primary);
+  --btn-border: transparent;
+  --btn-hover-bg: var(--t-primary-container);
+  --btn-hover-fg: var(--t-on-primary-container);
+
+  --input-bg: color-mix(in srgb, var(--t-outline-variant) 26%, #ffffff);
+  --input-border-color: var(--t-primary);
+  --input-focus-color: var(--t-primary);
+
+  --t-divider-color: var(--t-secondary);
+  --t-divider-glyph: "❧";
+  --t-section-gap: 96px;
+  --t-container-max: 1200px;
+
+  --chip-bg: color-mix(in srgb, var(--t-tertiary) 16%, #ffffff);
+  --chip-fg: #274f2c;
+
+  --hero-overlay-a: color-mix(in srgb, var(--t-secondary-container) 30%, var(--t-background));
+  --hero-overlay-b: color-mix(in srgb, var(--t-background) 92%, transparent);
+}
+
+/* ============================================================
+   6. NOCTURNE ELEGANCE — midnight black, glowing champagne
+   ============================================================ */
+[data-theme="nocturne-elegance"] {
+  --t-background: #131313;
+  --t-on-background: #e5e2e1;
+  --t-surface: #131313;
+  --t-surface-container-lowest: #0e0e0e;
+  --t-surface-container-low: #1a1a1a;
+  --t-surface-container: #201f1f;
+  --t-surface-container-high: #2a2a2a;
+  --t-on-surface: #e5e2e1;
+  --t-on-surface-variant: #d0c5af;
+  --t-primary: #f2ca50;
+  --t-on-primary: #3c2f00;
+  --t-primary-container: #d4af37;
+  --t-on-primary-container: #554300;
+  --t-secondary: #c8c8b0;
+  --t-on-secondary: #303221;
+  --t-secondary-container: #494a38;
+  --t-on-secondary-container: #b9baa3;
+  --t-tertiary: #bfcdff;
+  --t-outline: #99907c;
+  --t-outline-variant: #4d4635;
+  --t-inverse-surface: #e5e2e1;
+  --t-inverse-on-surface: #313030;
+
+  --t-font-display: var(--font-playfair), serif;
+  --t-font-script: var(--font-amiri), serif;
+  --t-font-body: var(--font-garamond), serif;
+  --t-font-label: var(--font-garamond), serif;
+
+  --t-display-size: 4rem;              /* 64px */
+  --t-display-size-sm: 2.5rem;         /* 40px */
+  --t-display-lh: 1.12;
+  --t-display-lh-sm: 1.2;
+  --t-display-weight: 300;
+  --t-headline-size: 2rem;
+  --t-headline-weight: 400;
+  --t-body-lg-size: 1.25rem;           /* 20px Garamond */
+  --t-body-lg-lh: 1.6;
+  --t-label-weight: 500;
+  --t-label-spacing: 0.15em;
+
+  --t-radius-btn: 0;
+  --t-radius-card: 0;
+  --t-radius-image: 0;
+  --t-radius-input: 0;
+  --t-radius-chip: 0;
+  --t-shadow-card: 0 0 60px rgba(0, 0, 0, 0.55);
+  --t-card-border: 1px solid color-mix(in srgb, var(--t-primary) 28%, transparent);
+  --t-image-border: none;
+
+  --btn-bg: transparent;
+  --btn-fg: var(--t-primary);
+  --btn-border: var(--t-primary);
+  --btn-hover-bg: var(--t-primary);
+  --btn-hover-fg: var(--t-on-primary);
+
+  --input-bg: transparent;
+  --input-border-color: var(--t-secondary);
+  --input-focus-color: var(--t-primary);
+
+  --t-divider-color: color-mix(in srgb, var(--t-primary) 55%, transparent);
+  --t-divider-glyph: "";
+  --t-section-gap: 120px;
+  --t-container-max: 1200px;
+
+  --header-bg: rgba(19, 19, 19, 0.95);
+  --chip-bg: transparent;
+  --chip-fg: var(--t-secondary);
+}
+
+/* ============================================================
+   RTL / Arabic typography — declared last so it wins.
+   Amiri calligraphy mirrors every theme's Latin serifs.
+   ============================================================ */
+[dir="rtl"] {
+  --t-font-display: var(--font-amiri), serif;
+  --t-font-script: var(--font-amiri), serif;
+  --t-font-body: var(--font-amiri), serif;
+  --t-font-label: var(--font-amiri), serif;
+  --t-display-tracking: 0;
+  --t-label-spacing: 0.05em;
+}
+[dir="rtl"][data-theme="emerald-gilt"] {
+  /* Arabic headlines ~15% larger for optical parity (spec) */
+}
+
+/* ============================================================
+   Per-theme personality — signature moves from each Stitch spec
+   ============================================================ */
+
+/* decorative layer behind sections */
+.theme-pattern-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+[data-theme="emerald-gilt"] .theme-pattern-layer {
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M28 2 L54 28 L28 54 L2 28 Z' fill='none' stroke='%2306402b' stroke-width='1'/%3E%3Cpath d='M28 14 L42 28 L28 42 L14 28 Z' fill='none' stroke='%2306402b' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 56px 56px;
+}
+[data-theme="botanical-hearth"] .theme-pattern-layer {
+  background-image:
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--t-tertiary) 16%, transparent), transparent 42%),
+    radial-gradient(circle at 88% 82%, color-mix(in srgb, var(--t-primary) 14%, transparent), transparent 46%);
+}
+
+/* ---------- Ethereal Union I : centered invitation symmetry ---------- */
+[data-theme="ethereal-union-1"] .section-head { text-align: center; }
+[data-theme="ethereal-union-1"] .text-label-caps { letter-spacing: 0.18em; }
+[data-theme="ethereal-union-1"] .double-frame {
+  outline: 1px solid var(--t-primary-container);
+  outline-offset: 4px;
+}
+[data-theme="ethereal-union-1"] .card-tonal {
+  background: var(--t-surface-container-lowest);
+}
+
+/* ---------- Ethereal Union II : italic display, blush surfaces ---------- */
+[data-theme="ethereal-union-2"] .text-display,
+[data-theme="ethereal-union-2"] .text-headline {
+  font-style: italic;
+}
+[data-theme="ethereal-union-2"] .script-accent { font-style: normal; }
+[data-theme="ethereal-union-2"] .card-tonal,
+[data-theme="ethereal-union-2"] .qr-card {
+  background: var(--t-primary-container);
+  color: var(--t-on-surface);
+}
+[data-theme="ethereal-union-2"] .chip {
+  background: var(--t-primary-container);
+  color: var(--t-on-primary-container);
+}
+[data-theme="ethereal-union-2"] .floral-corner { position: relative; overflow: hidden; }
+[data-theme="ethereal-union-2"] .floral-corner::before,
+[data-theme="ethereal-union-2"] .floral-corner::after {
+  content: "❀";
+  position: absolute;
+  font-size: 1.3rem;
+  color: var(--t-primary);
+  opacity: 0.3;
+  pointer-events: none;
+}
+[data-theme="ethereal-union-2"] .floral-corner::before { top: 10px; inset-inline-start: 14px; }
+[data-theme="ethereal-union-2"] .floral-corner::after { bottom: 10px; inset-inline-end: 14px; }
+
+/* ---------- Emerald & Gilt : clipped corners, double gold frames, glow ---------- */
+[data-theme="emerald-gilt"] .card,
+[data-theme="emerald-gilt"] .card-tonal,
+[data-theme="emerald-gilt"] .btn-primary,
+[data-theme="emerald-gilt"] .qr-card {
+  position: relative;
+  clip-path: polygon(
+    14px 0, 100% 0, 100% calc(100% - 14px),
+    calc(100% - 14px) 100%, 0 100%, 0 14px
+  );
+}
+[data-theme="emerald-gilt"] .double-frame {
+  outline: 1px solid #d4af37;
+  outline-offset: 4px;
+}
+[data-theme="emerald-gilt"] .chip { border: 1px solid #d4af37; }
+[data-theme="emerald-gilt"] .card:hover,
+[data-theme="emerald-gilt"] .card-tonal:hover {
+  box-shadow: 0 0 28px rgba(212, 175, 55, 0.35);
+}
+[data-theme="emerald-gilt"] .btn-primary:hover {
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.45);
+}
+[data-theme="emerald-gilt"] .text-label-caps { text-transform: uppercase; }
+
+/* ---------- Paper & Terracotta : asymmetric ruled heads, grayscale film ---------- */
+[data-theme="paper-terracotta"] .section-head {
+  text-align: start;
+  border-bottom: 4px solid var(--t-on-background);
+  padding-bottom: 1.25rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+[data-theme="paper-terracotta"] .image-frame img,
+[data-theme="paper-terracotta"] .polaroid img,
+[data-theme="paper-terracotta"] iframe {
+  filter: grayscale(1) contrast(1.06);
+  transition: filter 0.6s ease;
+}
+[data-theme="paper-terracotta"] figure:hover .image-frame img,
+[data-theme="paper-terracotta"] li:hover .image-frame img {
+  filter: none;
+}
+[data-theme="paper-terracotta"] .btn-ghost {
+  border: 2px solid var(--t-on-background);
+  color: var(--t-on-background);
+}
+[data-theme="paper-terracotta"] .btn-ghost:hover {
+  background: var(--t-secondary);
+  border-color: var(--t-secondary);
+  color: var(--t-on-secondary);
+}
+[data-theme="paper-terracotta"] .chip { border: 1px solid var(--t-on-background); }
+[data-theme="paper-terracotta"] .kicker-accent { color: var(--t-secondary); }
+
+/* ---------- Botanical Hearth : pebble masks, scrapbook scatter ---------- */
+[data-theme="botanical-hearth"] .blob-mask {
+  border-radius: 58% 42% 55% 45% / 52% 56% 44% 48%;
+  overflow: hidden;
+}
+[data-theme="botanical-hearth"] .polaroid {
+  background: var(--t-surface-container-lowest);
+  padding: 12px 12px 44px;
+  border-radius: 1rem;
+  box-shadow: 0 14px 34px rgba(151, 68, 0, 0.16);
+  transition: transform 0.45s ease;
+}
+[data-theme="botanical-hearth"] .polaroid:nth-child(odd) { transform: rotate(-2.2deg); }
+[data-theme="botanical-hearth"] .polaroid:nth-child(even) { transform: rotate(1.8deg); }
+[data-theme="botanical-hearth"] .polaroid:hover { transform: rotate(0deg) scale(1.03); z-index: 20; }
+[data-theme="botanical-hearth"] .polaroid::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 58px;
+  height: 20px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: color-mix(in srgb, var(--t-secondary-container) 55%, transparent);
+  backdrop-filter: blur(2px);
+}
+[data-theme="botanical-hearth"] .gallery-grid > *:nth-child(3n + 1) { transform: rotate(-1.6deg); }
+[data-theme="botanical-hearth"] .gallery-grid > *:nth-child(3n + 2) { transform: rotate(1.2deg); }
+[data-theme="botanical-hearth"] .btn-primary:hover { transform: translateY(-2px); }
+
+/* ---------- Nocturne Elegance : glass panels, twinkling gold ---------- */
+.sparkle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  background: var(--t-primary);
+  opacity: 0;
+  pointer-events: none;
+}
+[data-theme="nocturne-elegance"] .sparkle { animation: sparkle-twinkle 3.2s infinite; }
+@keyframes sparkle-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.4); }
+  50% { opacity: 0.9; transform: scale(1.25); }
+}
+[data-theme="nocturne-elegance"] .card,
+[data-theme="nocturne-elegance"] .card-tonal,
+[data-theme="nocturne-elegance"] .qr-card {
+  background: rgba(26, 26, 26, 0.72);
+  backdrop-filter: blur(10px);
+}
+[data-theme="nocturne-elegance"] .text-label-caps { letter-spacing: 0.25em; }
+[data-theme="nocturne-elegance"] .script-accent { color: var(--t-primary); font-style: normal; }
+[data-theme="nocturne-elegance"] .chip {
+  border: 1px solid color-mix(in srgb, var(--t-secondary) 40%, transparent);
+}
+[data-theme="nocturne-elegance"] .image-frame img { opacity: 0.88; transition: opacity 0.5s ease; }
+[data-theme="nocturne-elegance"] figure:hover .image-frame img { opacity: 1; }
