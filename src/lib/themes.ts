@@ -4,7 +4,8 @@ export type ThemeId =
   | "emerald-gilt"
   | "paper-terracotta"
   | "botanical-hearth"
-  | "nocturne-elegance";
+  | "nocturne-elegance"
+  | "video-lumina";
 
 export interface ThemeMeta {
   id: ThemeId;
@@ -67,6 +68,14 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Midnight black, glowing champagne gold",
     taglineAr: "أسود منتصف الليل وذهب متوهج",
     swatch: { surface: "#131313", primary: "#f2ca50", secondary: "#c8c8b0" },
+  },
+  {
+    id: "video-lumina",
+    nameEn: "Video: Lumina Sequence",
+    nameAr: "فيديو: تسلسل لومينا",
+    taglineEn: "Envelope reveal with looping curtain",
+    taglineAr: "فيديو افتتاحي مع خلفية متحركة",
+    swatch: { surface: "#0a0a0a", primary: "#c8a55b", secondary: "#1a1a1a" },
   },
 ];
 

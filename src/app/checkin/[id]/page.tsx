@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getSettings } from "@/lib/settings";
 import QRCode from "qrcode";
 import { HeroSection } from "@/components/invite/HeroSection";
+import { InviteClient } from "@/components/invite/invite-client";
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +41,18 @@ export default async function CheckinPage({
       margin: 2,
     });
 
-    return <HeroSection family={mockFamily} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />;
+    if (settings.active_theme === "video-lumina") {
+      return <HeroSection family={mockFamily} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />;
+    }
+    
+    return (
+      <InviteClient 
+        family={mockFamily} 
+        settings={settings} 
+        qrSrc={qrCodeDataUrl} 
+        fullInviteUrl={`https://wedding.example.com/checkin/${mockFamily.id}`} 
+      />
+    );
   }
 
   const settings = await getSettings();
@@ -52,17 +64,24 @@ export default async function CheckinPage({
     margin: 2,
   });
 
+  const familyProps = {
+    id: family.id,
+    nameEn: family.nameEn,
+    nameAr: family.nameAr,
+    guestCount: family.guestCount,
+    rsvpStatus: family.rsvpStatus,
+  };
+
+  if (settings.active_theme === "video-lumina") {
+    return <HeroSection family={familyProps} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />;
+  }
+
   return (
-    <HeroSection
-      family={{
-        id: family.id,
-        nameEn: family.nameEn,
-        nameAr: family.nameAr,
-        guestCount: family.guestCount,
-        rsvpStatus: family.rsvpStatus,
-      }}
+    <InviteClient
+      family={familyProps}
       settings={settings}
-      qrCodeDataUrl={qrCodeDataUrl}
+      qrSrc={qrCodeDataUrl}
+      fullInviteUrl={`https://wedding.example.com/checkin/${family.id}`}
     />
   );
 }
