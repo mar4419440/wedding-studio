@@ -3,7 +3,7 @@ import { verifySessionToken } from "@/lib/session-token";
 
 const COOKIE_NAME = "wedding_admin_session";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/admin/login")) {
@@ -21,5 +21,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/checkin/:path*"],
+  matcher: ["/admin/:path*"],
 };
