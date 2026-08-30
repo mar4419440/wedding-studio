@@ -19,7 +19,6 @@ interface DynamicHeroProps {
   };
   settings: SettingsMap;
   qrCodeDataUrl: string;
-  qrCodeDataUrl: string;
 }
 
 export function DynamicHero({ family, settings, qrCodeDataUrl }: DynamicHeroProps) {
