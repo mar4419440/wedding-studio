@@ -43,6 +43,11 @@ export function MediaManager() {
   const [addTag, setAddTag] = useState("wedding");
   const [addCaptionEn, setAddCaptionEn] = useState("");
   const [addCaptionAr, setAddCaptionAr] = useState("");
+  const [addTitleEn, setAddTitleEn] = useState("");
+  const [addTitleAr, setAddTitleAr] = useState("");
+  const [addBodyEn, setAddBodyEn] = useState("");
+  const [addBodyAr, setAddBodyAr] = useState("");
+  const [addDateLabel, setAddDateLabel] = useState("");
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState<string | null>(null);
 
@@ -78,6 +83,11 @@ export function MediaManager() {
           eventTag: addTag,
           captionEn: addCaptionEn || undefined,
           captionAr: addCaptionAr || undefined,
+          titleEn: addTitleEn || undefined,
+          titleAr: addTitleAr || undefined,
+          bodyEn: addBodyEn || undefined,
+          bodyAr: addBodyAr || undefined,
+          dateLabel: addDateLabel || undefined,
           order: Math.floor(Date.now() / 1000),
         }),
       });
@@ -89,6 +99,11 @@ export function MediaManager() {
       setLink("");
       setAddCaptionEn("");
       setAddCaptionAr("");
+      setAddTitleEn("");
+      setAddTitleAr("");
+      setAddBodyEn("");
+      setAddBodyAr("");
+      setAddDateLabel("");
       load();
     } finally {
       setAdding(false);
@@ -186,21 +201,67 @@ export function MediaManager() {
         </div>
 
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <input
-            dir="ltr"
-            value={addCaptionEn}
-            onChange={(e) => setAddCaptionEn(e.target.value)}
-            placeholder="Caption (English)"
-            className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500"
-          />
-          <input
-            dir="rtl"
-            lang="ar"
-            value={addCaptionAr}
-            onChange={(e) => setAddCaptionAr(e.target.value)}
-            placeholder="التسمية (بالعربي)"
-            className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500"
-          />
+          {addKind === "gallery" ? (
+            <>
+              <input
+                dir="ltr"
+                value={addCaptionEn}
+                onChange={(e) => setAddCaptionEn(e.target.value)}
+                placeholder="Caption (English)"
+                className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500"
+              />
+              <input
+                dir="rtl"
+                lang="ar"
+                value={addCaptionAr}
+                onChange={(e) => setAddCaptionAr(e.target.value)}
+                placeholder="التسمية (بالعربي)"
+                className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500"
+              />
+            </>
+          ) : (
+            <>
+              <input
+                dir="ltr"
+                value={addTitleEn}
+                onChange={(e) => setAddTitleEn(e.target.value)}
+                placeholder="Title (English)"
+                className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500"
+              />
+              <input
+                dir="rtl"
+                lang="ar"
+                value={addTitleAr}
+                onChange={(e) => setAddTitleAr(e.target.value)}
+                placeholder="العنوان (بالعربي)"
+                className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500"
+              />
+              <textarea
+                dir="ltr"
+                rows={2}
+                value={addBodyEn}
+                onChange={(e) => setAddBodyEn(e.target.value)}
+                placeholder="Story text (English)"
+                className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500 sm:col-span-2"
+              />
+              <textarea
+                dir="rtl"
+                lang="ar"
+                rows={2}
+                value={addBodyAr}
+                onChange={(e) => setAddBodyAr(e.target.value)}
+                placeholder="نص القصة (بالعربي)"
+                className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500 sm:col-span-2"
+              />
+              <input
+                dir="ltr"
+                value={addDateLabel}
+                onChange={(e) => setAddDateLabel(e.target.value)}
+                placeholder="Date label (e.g. June 2021)"
+                className="w-full rounded-xl border border-stone-300 px-3 py-2 text-sm outline-none focus:border-stone-500"
+              />
+            </>
+          )}
         </div>
 
         {addError ? <p className="mt-3 text-sm text-rose-600">{addError}</p> : null}
