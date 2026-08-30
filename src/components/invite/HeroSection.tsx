@@ -54,7 +54,7 @@ export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSect
       />
       
       {/* Portfolio Gallery Section appears below the hero */}
-      <PortfolioSection media={media} />
+      {/* <PortfolioSection media={media} /> */}
     </>
   );
 }
