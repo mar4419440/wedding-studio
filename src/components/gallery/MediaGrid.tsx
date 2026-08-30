@@ -2,12 +2,32 @@
 
 import Image from "next/image";
 import { Play } from "lucide-react";
+import { motion } from "framer-motion";
 import type { GalleryMedia } from "./types";
 
 interface MediaGridProps {
   items: GalleryMedia[];
   onMediaClick: (index: number) => void;
 }
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 20 }
+  }
+};
 
 export function MediaGrid({ items, onMediaClick }: MediaGridProps) {
   if (!items || items.length === 0) {
@@ -19,10 +39,17 @@ export function MediaGrid({ items, onMediaClick }: MediaGridProps) {
   }
 
   return (
-    <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+    <motion.div 
+      className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-50px" }}
+    >
       {items.map((item, idx) => (
-        <div 
+        <motion.div 
           key={item.id}
+          variants={itemVariants}
           className="relative break-inside-avoid group cursor-pointer overflow-hidden rounded-sm transition-all duration-500 hover:shadow-[0_10px_30px_rgba(201,166,107,0.15)] bg-white/50 border border-transparent hover:border-[#C9A66B]/20"
           onClick={() => onMediaClick(idx)}
         >
@@ -44,8 +71,7 @@ export function MediaGrid({ items, onMediaClick }: MediaGridProps) {
                 </div>
               </>
             ) : (
-              // Using a standard img tag with aspect-auto to support masonry variable heights properly,
-              // since next/image with layout="responsive" requires knowing aspect ratio upfront.
+              // Using a standard img tag with aspect-auto to support masonry variable heights properly
               /* eslint-disable-next-line @next/next/no-img-element */
               <img 
                 src={item.url} 
@@ -55,8 +81,8 @@ export function MediaGrid({ items, onMediaClick }: MediaGridProps) {
               />
             )}
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
