@@ -122,19 +122,7 @@ export function Lightbox({ items, initialIndex, onClose }: LightboxProps) {
             </motion.div>
           </AnimatePresence>
           
-          {/* Caption */}
-          {caption && (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="absolute bottom-4 left-0 right-0 text-center px-8"
-            >
-              <p className="inline-block bg-black/60 backdrop-blur-md text-[#FAF6F0] px-6 py-2 rounded-full text-sm sm:text-base border border-[#C9A66B]/20 shadow-lg">
-                {caption}
-              </p>
-            </motion.div>
-          )}
+          {/* Caption removed as requested */}
         </div>
       </motion.div>
     </AnimatePresence>
