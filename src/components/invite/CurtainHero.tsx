@@ -61,7 +61,7 @@ export function CurtainHero({ family, settings, qrCodeDataUrl }: CurtainHeroProp
     <div className={`relative w-full min-h-screen bg-black overflow-hidden transition-opacity duration-700 ease-in-out ${introFinished ? "opacity-100" : "opacity-0"}`} dir={isAr ? "rtl" : "ltr"}>
       {/* Background Looping Curtain Video */}
       <video
-        src="/curtain-loop.mp4"
+        src="/curtain-loop-new.mp4"
         className="absolute inset-0 w-full h-full object-cover z-0"
         autoPlay
         muted
