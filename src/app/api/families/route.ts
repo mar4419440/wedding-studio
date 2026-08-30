@@ -71,7 +71,7 @@ export async function POST(request: Request) {
     },
   });
 
-  const invitePath = `/invite/${family.id}`;
+  const invitePath = `/checkin/${family.id}`;
   const qrUrl = `${origin}/checkin/${family.id}`;
 
   const updated = await prisma.family.update({

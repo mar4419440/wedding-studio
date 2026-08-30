@@ -19,8 +19,8 @@ export function serializeFamily(family: Family, origin: string) {
     checkedIn: family.checkedIn,
     checkedInAt: family.checkedInAt,
     createdAt: family.createdAt,
-    inviteUrl: `/invite/${family.id}`,
-    fullInviteUrl: `${origin}/invite/${family.id}`,
+    inviteUrl: `/checkin/${family.id}`,
+    fullInviteUrl: `${origin}/checkin/${family.id}`,
     qrUrl: `${origin}/checkin/${family.id}`,
   };
 }
