@@ -10,13 +10,19 @@ export default async function DemoPreviewPage({
 }: {
   searchParams: Promise<{ theme?: string }>;
 }) {
-  const [{ theme }, settings, media] = await Promise.all([
+  const [{ theme }, settings] = await Promise.all([
     searchParams,
     getSettings(),
-    prisma.media.findMany({
-      orderBy: [{ kind: "asc" }, { order: "asc" }],
-    }),
   ]);
+
+  let media: any[] = [];
+  try {
+    media = await prisma.media.findMany({
+      orderBy: [{ kind: "asc" }, { order: "asc" }],
+    });
+  } catch (error) {
+    console.error("Database connection error on demo page, falling back to empty media", error);
+  }
 
   const story = media
     .filter((m) => m.kind === "story")
