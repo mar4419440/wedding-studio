@@ -13,9 +13,14 @@ export default async function CheckinPage({
 }) {
   const { id } = await params;
   
-  const family = await prisma.family.findUnique({
-    where: { id },
-  });
+  let family = null;
+  try {
+    family = await prisma.family.findUnique({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("Database connection error, falling back to mock data", error);
+  }
 
   if (!family) {
     // If testing without a real database connection or ID doesn't exist, we provide mock data 
