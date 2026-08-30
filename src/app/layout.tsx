@@ -1,28 +1,41 @@
 import type { Metadata } from "next";
-import {
-  Amiri,
-  EB_Garamond,
-  Inter,
-  Noto_Serif,
-  Playfair_Display,
-  Plus_Jakarta_Sans,
-  Source_Serif_4,
-} from "next/font/google";
+import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import { HtmlSync } from "@/components/html-sync";
 import { getSettings } from "@/lib/settings";
 import "./globals.css";
 
-const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["latin"] });
-const garamond = EB_Garamond({ variable: "--font-garamond", subsets: ["latin"] });
-const notoSerif = Noto_Serif({ variable: "--font-noto-serif", subsets: ["latin"] });
-const sourceSerif = Source_Serif_4({ variable: "--font-source-serif", subsets: ["latin"] });
-const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"] });
+// Primary body font (using Google Fonts as the single variable body text font)
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const amiri = Amiri({
-  variable: "--font-amiri",
-  subsets: ["arabic", "latin"],
-  weight: ["400", "700"],
+
+// Local fonts mapped to themes
+const bodoniModa = localFont({ src: "../../public/fonts/Bodoni_Moda.ttf", variable: "--font-bodoni-moda", display: "swap", weight: "100 900" });
+const belluccia = localFont({ src: "../../public/fonts/Belluccia.ttf", variable: "--font-belluccia", display: "swap", weight: "400" });
+const cinzel = localFont({ src: "../../public/fonts/Cinzel.ttf", variable: "--font-cinzel", display: "swap", weight: "100 900" });
+const cinzelDeco = localFont({ src: "../../public/fonts/Cinzel_Decorative.ttf", variable: "--font-cinzel-deco", display: "swap", weight: "400" });
+const domine = localFont({ src: "../../public/fonts/Domine.ttf", variable: "--font-domine", display: "swap", weight: "100 900" });
+const betaniaPatmos = localFont({ src: "../../public/fonts/Betania_Patmos.ttf", variable: "--font-betania-patmos", display: "swap", weight: "400" });
+const kadwa = localFont({ src: "../../public/fonts/Kadwa.ttf", variable: "--font-kadwa", display: "swap", weight: "400" });
+
+// Arabic Fonts
+const arScheherazade = localFont({ src: "../../public/fonts/arabic/Scheherazade_New.ttf", variable: "--font-ar-scheherazade", display: "swap", weight: "400" });
+const arArefRuqaa = localFont({ src: "../../public/fonts/arabic/Aref_Ruqaa.ttf", variable: "--font-ar-aref", display: "swap", weight: "400" });
+const arAmiri = localFont({ src: "../../public/fonts/arabic/Amiri.ttf", variable: "--font-ar-amiri", display: "swap", weight: "400" });
+const arKatibeh = localFont({ src: "../../public/fonts/arabic/Katibeh.ttf", variable: "--font-ar-katibeh", display: "swap", weight: "400" });
+const arReemKufi = localFont({ src: "../../public/fonts/arabic/Reem_Kufi.ttf", variable: "--font-ar-reem", display: "swap", weight: "400" });
+const arCairo = localFont({ src: "../../public/fonts/arabic/Cairo.ttf", variable: "--font-ar-cairo", display: "swap", weight: "400" });
+const arTajawal = localFont({ src: "../../public/fonts/arabic/Tajawal.ttf", variable: "--font-ar-tajawal", display: "swap", weight: "400" });
+
+// Configure our single variable font (which must support Arabic and Latin wide axes)
+// NOTE: Uncomment this once you place your variable font in /public/fonts/
+/*
+const customVariableFont = localFont({
+  src: "../../public/fonts/variable-font.woff2",
+  variable: "--font-variable",
+  weight: "100 900",
+  display: "swap",
 });
+*/
 
 export const metadata: Metadata = {
   title: "Amira & Khalid — Wedding Platform",
@@ -63,7 +76,7 @@ export default async function RootLayout({
       dir="ltr"
       data-theme={settings.active_theme}
       suppressHydrationWarning
-      className={`${playfair.variable} ${garamond.variable} ${notoSerif.variable} ${sourceSerif.variable} ${jakarta.variable} ${inter.variable} ${amiri.variable} h-full antialiased`}
+      className={`h-full antialiased ${inter.variable} ${bodoniModa.variable} ${belluccia.variable} ${cinzel.variable} ${cinzelDeco.variable} ${domine.variable} ${betaniaPatmos.variable} ${kadwa.variable} ${arScheherazade.variable} ${arArefRuqaa.variable} ${arAmiri.variable} ${arKatibeh.variable} ${arReemKufi.variable} ${arCairo.variable} ${arTajawal.variable} font-variable`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: uiBootstrap }} />

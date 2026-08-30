@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { useUi } from "@/store/ui";
 
+import { getTheme } from "@/lib/themes";
+
 /**
  * Single source of truth for <html lang/dir/data-theme> on the client.
  *
@@ -27,7 +29,17 @@ export function HtmlSync({ baseTheme }: { baseTheme: string }) {
     const root = document.documentElement;
     const override =
       routeTheme ?? (previewAllowed && previewTheme ? previewTheme : null);
-    root.dataset.theme = override ?? baseTheme;
+    
+    const activeThemeId = override ?? baseTheme;
+    root.dataset.theme = activeThemeId;
+
+    // Apply global body typography via CSS variables
+    const activeTheme = getTheme(activeThemeId);
+    if (activeTheme?.typography) {
+      root.style.setProperty("--body-font-variation-settings", activeTheme.typography.bodyFontVariationSettings);
+      root.style.setProperty("--theme-letter-spacing", activeTheme.typography.letterSpacing);
+      root.style.setProperty("--theme-line-height", activeTheme.typography.lineHeight);
+    }
   }, [routeTheme, previewTheme, previewAllowed, baseTheme]);
 
   return null;

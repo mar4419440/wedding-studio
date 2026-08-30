@@ -5,6 +5,7 @@ import { bi, t } from "@/lib/i18n";
 import type { SettingsMap } from "@/lib/settings";
 import { Divider } from "@/components/divider";
 import { Sparkles } from "@/components/site/sparkles";
+import { ThemedHeading } from "@/components/ui/ThemedHeading";
 
 export function HeroSection({ settings }: { settings: SettingsMap }) {
   const language = useUi((s) => s.language);
@@ -33,14 +34,20 @@ export function HeroSection({ settings }: { settings: SettingsMap }) {
       <div className="container-wedding relative z-10 flex flex-col items-center pb-16 text-center">
         <p className="text-label-caps mb-6 text-secondary">{settings[`kicker_${language}`]}</p>
 
-        <h1 className="text-display text-primary">{names}</h1>
-        <p
+        <ThemedHeading
+          text={names}
+          type="heroNames"
+          as="h1"
+          className="text-display text-primary"
+        />
+        <ThemedHeading
+          text={secondaryNames || ""}
+          type="dynamic"
+          as="p"
           className="font-display mt-3 text-xl opacity-70 md:text-2xl"
           dir={otherLang === "ar" ? "rtl" : "ltr"}
           lang={otherLang}
-        >
-          {secondaryNames}
-        </p>
+        />
 
         <div className="my-8 w-full max-w-xs">
           <Divider />

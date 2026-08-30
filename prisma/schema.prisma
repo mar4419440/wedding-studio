@@ -6,9 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider  = "mysql"
+  url       = env("DATABASE_URL")
 }
 
 model Family {
@@ -21,9 +20,9 @@ model Family {
   checkedIn   Boolean   @default(false)
   checkedInAt DateTime?
   qrCodeData  String?
-  inviteUrl   String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  inviteUrl   String?  @db.VarChar(512)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([rsvpStatus])
   @@index([checkedIn])
@@ -31,20 +30,20 @@ model Family {
 
 model Setting {
   key   String @id
-  value String
+  value String @db.Text
 }
 
 model Media {
   id        String   @id @default(uuid())
   kind      String   @default("gallery") // gallery | story
-  url       String
+  url       String   @db.VarChar(512)
   mediaType String   @default("image") // image | video
-  captionAr String?
-  captionEn String?
+  captionAr String?  @db.Text
+  captionEn String?  @db.Text
   titleAr   String?
   titleEn   String?
-  bodyAr    String?
-  bodyEn    String?
+  bodyAr    String?  @db.Text
+  bodyEn    String?  @db.Text
   dateLabel String?
   eventTag  String?  // engagement | henna | wedding | other
   order     Int      @default(0)

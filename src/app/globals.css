@@ -24,3 +24,12 @@
   --color-inverse-surface: var(--t-inverse-surface);
   --color-inverse-on-surface: var(--t-inverse-on-surface);
 }
+
+@layer base {
+  body {
+    /* These variables are dynamically injected by HtmlSync based on the active theme */
+    font-variation-settings: var(--body-font-variation-settings, normal);
+    letter-spacing: var(--theme-letter-spacing, normal);
+    line-height: var(--theme-line-height, normal);
+  }
+}

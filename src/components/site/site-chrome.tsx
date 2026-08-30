@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Languages, Heart } from "lucide-react";
 import { useUi } from "@/store/ui";
 
+import { ThemedHeading } from "@/components/ui/ThemedHeading";
+
 export function SiteHeader({ monogram }: { monogram: string }) {
   const language = useUi((s) => s.language);
   const toggleLanguage = useUi((s) => s.toggleLanguage);
@@ -21,8 +23,13 @@ export function SiteHeader({ monogram }: { monogram: string }) {
       style={{ borderColor: "color-mix(in srgb, var(--t-outline-variant) 45%, transparent)", background: "var(--header-bg)" }}
     >
       <div className="container-wedding flex items-center justify-between py-3">
-        <Link href="/demo" className="font-display text-xl tracking-wide text-primary md:text-2xl">
-          {monogram}
+        <Link href="/demo" className="text-primary transition-colors hover:text-on-surface">
+          <ThemedHeading 
+            text={monogram} 
+            type="dynamic" 
+            as="span" 
+            className="font-display text-xl tracking-wide md:text-2xl" 
+          />
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">

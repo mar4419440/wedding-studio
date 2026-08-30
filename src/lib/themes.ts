@@ -7,6 +7,19 @@ export type ThemeId =
   | "nocturne-elegance"
   | "video-lumina";
 
+export interface TypographyConfig {
+  headingFontFamily: string; // The CSS variable of the Google Font to use as fallback
+  headingFontFamilyAr: string; // The CSS variable for the Arabic font
+  headingFontVariationSettings: string;
+  bodyFontVariationSettings: string;
+  letterSpacing: string;
+  lineHeight: string;
+  svgAssets: {
+    heroNames: string;
+    sectionTitle: string;
+  };
+}
+
 export interface ThemeMeta {
   id: ThemeId;
   nameEn: string;
@@ -14,6 +27,7 @@ export interface ThemeMeta {
   taglineEn: string;
   taglineAr: string;
   swatch: { surface: string; primary: string; secondary: string };
+  typography: TypographyConfig;
 }
 
 /**
@@ -28,6 +42,18 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Ivory & gold hairlines, serif on serif",
     taglineAr: "عاجي وذهبي بخطوط رفيعة كلاسيكية",
     swatch: { surface: "#faf9f9", primary: "#d4af37", secondary: "#2d2d2d" },
+    typography: {
+      headingFontFamily: "var(--font-bodoni-moda)",
+      headingFontFamilyAr: "var(--font-ar-scheherazade)",
+      headingFontVariationSettings: '"wght" 800, "wdth" 100', // Didone inspired, high contrast
+      bodyFontVariationSettings: '"wght" 400, "wdth" 100',
+      letterSpacing: '0.05em',
+      lineHeight: '1.6',
+      svgAssets: {
+        heroNames: '/themes/ethereal-union-1/hero-names.svg',
+        sectionTitle: '/themes/ethereal-union-1/section-title.svg',
+      },
+    },
   },
   {
     id: "ethereal-union-2",
@@ -36,6 +62,18 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Blush linen, rose gold & italic serifs",
     taglineAr: "كتان وردي وذهبية وردية بخط مائل",
     swatch: { surface: "#fbf9f8", primary: "#8c4b55", secondary: "#f5e6e8" },
+    typography: {
+      headingFontFamily: "var(--font-belluccia)",
+      headingFontFamilyAr: "var(--font-ar-aref)",
+      headingFontVariationSettings: '"wght" 400', // Script fonts usually don't have weight axis
+      bodyFontVariationSettings: '"wght" 300, "wdth" 100',
+      letterSpacing: '0.02em',
+      lineHeight: '1.8',
+      svgAssets: {
+        heroNames: '/themes/ethereal-union-2/hero-names.svg',
+        sectionTitle: '/themes/ethereal-union-2/section-title.svg',
+      },
+    },
   },
   {
     id: "emerald-gilt",
@@ -44,6 +82,18 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Mashrabiya geometry & gold leaf frames",
     taglineAr: "هندسة مشربية وإطارات من ورق الذهب",
     swatch: { surface: "#fff8f5", primary: "#06402b", secondary: "#fed65b" },
+    typography: {
+      headingFontFamily: "var(--font-cinzel-deco)",
+      headingFontFamilyAr: "var(--font-ar-amiri)",
+      headingFontVariationSettings: '"wght" 700',
+      bodyFontVariationSettings: '"wght" 500, "wdth" 90',
+      letterSpacing: '0.02em',
+      lineHeight: '1.5',
+      svgAssets: {
+        heroNames: '/themes/emerald-gilt/hero-names.svg',
+        sectionTitle: '/themes/emerald-gilt/section-title.svg',
+      },
+    },
   },
   {
     id: "paper-terracotta",
@@ -52,6 +102,18 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Editorial ink with a Mediterranean spark",
     taglineAr: "حبر تحريري بلمسة متوسطية",
     swatch: { surface: "#f9f9f9", primary: "#000000", secondary: "#9f402d" },
+    typography: {
+      headingFontFamily: "var(--font-domine)",
+      headingFontFamilyAr: "var(--font-ar-katibeh)",
+      headingFontVariationSettings: '"wght" 900',
+      bodyFontVariationSettings: '"wght" 400, "wdth" 100',
+      letterSpacing: '-0.02em',
+      lineHeight: '1.4',
+      svgAssets: {
+        heroNames: '/themes/paper-terracotta/hero-names.svg',
+        sectionTitle: '/themes/paper-terracotta/section-title.svg',
+      },
+    },
   },
   {
     id: "botanical-hearth",
@@ -60,6 +122,18 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Sun-baked terracotta, sage & scrapbook",
     taglineAr: "طين مشمس وحكاكة سكرابوك دافئة",
     swatch: { surface: "#fcf9f4", primary: "#974400", secondary: "#3c653f" },
+    typography: {
+      headingFontFamily: "var(--font-kadwa)",
+      headingFontFamilyAr: "var(--font-ar-reem)",
+      headingFontVariationSettings: '"wght" 500', 
+      bodyFontVariationSettings: '"wght" 400, "wdth" 105',
+      letterSpacing: '0.04em',
+      lineHeight: '1.7',
+      svgAssets: {
+        heroNames: '/themes/botanical-hearth/hero-names.svg',
+        sectionTitle: '/themes/botanical-hearth/section-title.svg',
+      },
+    },
   },
   {
     id: "nocturne-elegance",
@@ -68,6 +142,18 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Midnight black, glowing champagne gold",
     taglineAr: "أسود منتصف الليل وذهب متوهج",
     swatch: { surface: "#131313", primary: "#f2ca50", secondary: "#c8c8b0" },
+    typography: {
+      headingFontFamily: "var(--font-cinzel)",
+      headingFontFamilyAr: "var(--font-ar-cairo)",
+      headingFontVariationSettings: '"wght" 400', 
+      bodyFontVariationSettings: '"wght" 300, "wdth" 105',
+      letterSpacing: '0.02em', // Less letter spacing for Arabic
+      lineHeight: '2.0',
+      svgAssets: {
+        heroNames: '/themes/nocturne-elegance/hero-names.svg',
+        sectionTitle: '/themes/nocturne-elegance/section-title.svg',
+      },
+    },
   },
   {
     id: "video-lumina",
@@ -76,6 +162,18 @@ export const THEMES: ThemeMeta[] = [
     taglineEn: "Envelope reveal with looping curtain",
     taglineAr: "فيديو افتتاحي مع خلفية متحركة",
     swatch: { surface: "#0a0a0a", primary: "#c8a55b", secondary: "#1a1a1a" },
+    typography: {
+      headingFontFamily: "var(--font-betania-patmos)",
+      headingFontFamilyAr: "var(--font-ar-tajawal)",
+      headingFontVariationSettings: 'normal', 
+      bodyFontVariationSettings: '"wght" 400, "wdth" 100',
+      letterSpacing: '0.06em',
+      lineHeight: '1.5',
+      svgAssets: {
+        heroNames: '/themes/video-lumina/hero-names.svg',
+        sectionTitle: '/themes/video-lumina/section-title.svg',
+      },
+    },
   },
 ];
 
