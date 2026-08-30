@@ -15,7 +15,7 @@ export default async function CheckinPage({
   const { id } = await params;
   
   let family = null;
-  let media = [];
+  let media: any[] = [];
   try {
     family = await prisma.family.findUnique({
       where: { id },
