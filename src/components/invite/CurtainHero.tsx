@@ -43,8 +43,14 @@ export function CurtainHero({ family, settings, qrCodeDataUrl }: CurtainHeroProp
         className="absolute inset-0 w-full h-full object-cover z-0"
         autoPlay
         muted
-        loop
         playsInline
+        onTimeUpdate={(e) => {
+          const video = e.currentTarget;
+          if (video.duration && video.currentTime >= video.duration - 0.5) {
+            video.currentTime = 0;
+            video.play();
+          }
+        }}
       />
       
       {/* Content Overlay */}
