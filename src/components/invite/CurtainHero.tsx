@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useUi } from "@/store/ui";
-import { Users } from "lucide-react";
+import { Users, CheckCircle } from "lucide-react";
 import type { SettingsMap } from "@/lib/settings";
 import { GuestQrCard } from "./GuestQrCard";
 import { WeddingCalendar } from "./WeddingCalendar";
@@ -23,6 +24,9 @@ export function CurtainHero({ family, settings, qrCodeDataUrl }: CurtainHeroProp
   const isAr = language === "ar";
   
   const introFinished = useUi((s) => s.introFinished);
+  
+  const [rsvpStatus, setRsvpStatus] = useState(family.rsvpStatus);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const familyName = isAr ? family.nameAr : family.nameEn;
   const coupleName = isAr ? settings.couple_name_ar : settings.couple_name_en;
@@ -33,7 +37,25 @@ export function CurtainHero({ family, settings, qrCodeDataUrl }: CurtainHeroProp
     DECLINED: "bg-red-500/20 text-red-200 border-red-500/30",
   };
 
-  const statusColor = statusColors[family.rsvpStatus as keyof typeof statusColors] || statusColors.PENDING;
+  const statusColor = statusColors[rsvpStatus as keyof typeof statusColors] || statusColors.PENDING;
+
+  const handleConfirm = async () => {
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ familyId: family.id, status: "CONFIRMED" }),
+      });
+      if (res.ok) {
+        setRsvpStatus("CONFIRMED");
+      }
+    } catch (error) {
+      console.error("Failed to confirm RSVP", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className={`relative w-full min-h-screen bg-black overflow-hidden transition-opacity duration-700 ease-in-out ${introFinished ? "opacity-100" : "opacity-0"}`} dir={isAr ? "rtl" : "ltr"}>
@@ -83,9 +105,20 @@ export function CurtainHero({ family, settings, qrCodeDataUrl }: CurtainHeroProp
               </div>
               
               <div className={`px-3 py-1.5 rounded-full border ${statusColor}`}>
-                {family.rsvpStatus}
+                {rsvpStatus}
               </div>
             </div>
+
+            {rsvpStatus !== "CONFIRMED" && (
+              <button
+                onClick={handleConfirm}
+                disabled={isSubmitting}
+                className="mt-4 w-full flex items-center justify-center gap-2 bg-[#C9A66B] hover:bg-[#b59560] text-white font-medium py-2.5 px-4 rounded-xl shadow-lg transition-colors duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                <CheckCircle className="w-5 h-5" />
+                {isSubmitting ? (isAr ? "جاري التأكيد..." : "Confirming...") : (isAr ? "سأحضر بالتأكيد" : "I will come")}
+              </button>
+            )}
           </div>
 
           <div className="w-full mt-2">
