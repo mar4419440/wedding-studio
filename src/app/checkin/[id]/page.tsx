@@ -15,9 +15,14 @@ export default async function CheckinPage({
   const { id } = await params;
   
   let family = null;
+  let media = [];
   try {
     family = await prisma.family.findUnique({
       where: { id },
+    });
+    media = await prisma.media.findMany({
+      where: { kind: "gallery" },
+      orderBy: { order: "asc" },
     });
   } catch (error) {
     console.error("Database connection error, falling back to mock data", error);
@@ -42,7 +47,7 @@ export default async function CheckinPage({
     });
 
     if (settings.active_theme === "video-lumina") {
-      return <HeroSection family={mockFamily} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />;
+      return <HeroSection family={mockFamily} settings={settings} qrCodeDataUrl={qrCodeDataUrl} media={media} />;
     }
     
     return (
@@ -73,7 +78,7 @@ export default async function CheckinPage({
   };
 
   if (settings.active_theme === "video-lumina") {
-    return <HeroSection family={familyProps} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />;
+    return <HeroSection family={familyProps} settings={settings} qrCodeDataUrl={qrCodeDataUrl} media={media} />;
   }
 
   return (

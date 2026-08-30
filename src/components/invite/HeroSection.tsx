@@ -5,6 +5,8 @@ import { useUi } from "@/store/ui";
 import type { SettingsMap } from "@/lib/settings";
 import { EnvelopeIntro } from "./EnvelopeIntro";
 import { CurtainHero } from "./CurtainHero";
+import { PortfolioSection } from "../gallery/PortfolioSection";
+import type { GalleryMedia } from "../gallery/types";
 
 interface HeroSectionProps {
   family: {
@@ -16,9 +18,10 @@ interface HeroSectionProps {
   };
   settings: SettingsMap;
   qrCodeDataUrl: string;
+  media: GalleryMedia[];
 }
 
-export function HeroSection({ family, settings, qrCodeDataUrl }: HeroSectionProps) {
+export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSectionProps) {
   const introFinished = useUi((s) => s.introFinished);
   const setIntroFinished = useUi((s) => s.setIntroFinished);
   const [mounted, setMounted] = useState(false);
@@ -49,6 +52,9 @@ export function HeroSection({ family, settings, qrCodeDataUrl }: HeroSectionProp
         settings={settings} 
         qrCodeDataUrl={qrCodeDataUrl} 
       />
+      
+      {/* Portfolio Gallery Section appears below the hero */}
+      <PortfolioSection media={media} />
     </>
   );
 }
