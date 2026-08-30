@@ -17,6 +17,9 @@ interface UiState {
   setPreviewTheme: (theme: string | null) => void;
   setRouteTheme: (theme: string | null) => void;
   setPreviewAllowed: (allowed: boolean) => void;
+  /** Whether the envelope intro has finished playing. */
+  introFinished: boolean;
+  setIntroFinished: (finished: boolean) => void;
 }
 
 export const useUi = create<UiState>()(
@@ -32,6 +35,8 @@ export const useUi = create<UiState>()(
       setPreviewTheme: (theme) => set({ previewTheme: theme }),
       setRouteTheme: (theme) => set({ routeTheme: theme }),
       setPreviewAllowed: (allowed) => set({ previewAllowed: allowed }),
+      introFinished: false,
+      setIntroFinished: (finished) => set({ introFinished: finished }),
     }),
     {
       name: "wedding-ui",

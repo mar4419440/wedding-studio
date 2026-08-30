@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getSettings } from "@/lib/settings";
 import QRCode from "qrcode";
-import { InvitationClient } from "@/components/invite/invitation-client";
+import { HeroSection } from "@/components/invite/HeroSection";
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +40,7 @@ export default async function CheckinPage({
       margin: 2,
     });
 
-    return <InvitationClient family={mockFamily} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />;
+    return <HeroSection family={mockFamily} settings={settings} qrCodeDataUrl={qrCodeDataUrl} />;
   }
 
   const settings = await getSettings();
@@ -53,14 +53,13 @@ export default async function CheckinPage({
   });
 
   return (
-    <InvitationClient
+    <HeroSection
       family={{
         id: family.id,
         nameEn: family.nameEn,
         nameAr: family.nameAr,
         guestCount: family.guestCount,
         rsvpStatus: family.rsvpStatus,
-        checkedIn: family.checkedIn,
       }}
       settings={settings}
       qrCodeDataUrl={qrCodeDataUrl}
