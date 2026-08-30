@@ -58,8 +58,7 @@ export function GuestbookSection() {
     <section className="relative w-full bg-stone-50 py-24" dir={isAr ? "rtl" : "ltr"}>
       <div className="mx-auto max-w-4xl px-4 md:px-8">
         <ThemedHeading 
-          titleEn="Guestbook" 
-          titleAr="سجل الزوار" 
+          text={isAr ? "سجل الزوار" : "Guestbook"} 
           className="mb-12"
         />
 
