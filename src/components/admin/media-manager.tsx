@@ -47,7 +47,6 @@ export function MediaManager() {
   const [addError, setAddError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/media");
       if (res.ok) {

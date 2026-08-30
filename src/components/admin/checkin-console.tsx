@@ -60,29 +60,38 @@ export function CheckinConsole() {
   }, []);
 
   useEffect(() => {
-    refresh();
-    const timer = setInterval(refresh, 6000); // live counter
-    return () => clearInterval(timer);
+    // Initial fetch + live polling of the check-in counters.
+    const initial = setTimeout(() => void refresh(), 0);
+    const timer = setInterval(() => void refresh(), 6000);
+    return () => {
+      clearTimeout(initial);
+      clearInterval(timer);
+    };
   }, [refresh]);
 
-  async function lookup(raw?: string) {
-    const value = (raw ?? code).trim();
-    if (!value) return;
-    setBusy(true);
-    setError(null);
-    setFamily(null);
-    try {
-      const res = await fetch(`/api/checkin?code=${encodeURIComponent(value)}`);
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error === "Not found" ? "No family matches that code." : "Lookup failed.");
-        return;
+  const lookup = useCallback(
+    async (raw?: string) => {
+      const value = (raw ?? code).trim();
+      if (!value) return;
+      setBusy(true);
+      setError(null);
+      setFamily(null);
+      try {
+        const res = await fetch(`/api/checkin?code=${encodeURIComponent(value)}`);
+        const data = await res.json();
+        if (!res.ok) {
+          setError(
+            data.error === "Not found" ? "No family matches that code." : "Lookup failed."
+          );
+          return;
+        }
+        setFamily(data.family as FamilyLite);
+      } finally {
+        setBusy(false);
       }
-      setFamily(data.family as FamilyLite);
-    } finally {
-      setBusy(false);
-    }
-  }
+    },
+    [code]
+  );
 
   async function toggleCheckin(familyId: string, undo: boolean) {
     setBusy(true);
@@ -131,10 +140,9 @@ export function CheckinConsole() {
         await videoRef.current.play();
       }
       const detector = new Detector({ formats: ["qr_code"] });
-      let stopped = false;
 
-      const tick = async () => {
-        if (stopped || !videoRef.current) return;
+      const tick = async (): Promise<void> => {
+        if (!videoRef.current || !streamRef.current) return;
         try {
           const codes = await detector.detect(videoRef.current);
           if (codes.length > 0) {

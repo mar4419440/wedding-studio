@@ -23,7 +23,9 @@ export async function setSessionCookie(): Promise<void> {
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_TTL_MS / 1000,
-    secure: process.env.NODE_ENV === "production",
+    // Deployment is served over plain HTTP behind XAMPP/Apache;
+    // flip this on when serving via HTTPS.
+    secure: process.env.COOKIE_SECURE === "true",
   });
 }
 

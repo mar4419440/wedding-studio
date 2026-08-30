@@ -50,7 +50,6 @@ export function InvitationsManager() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    setLoading(true);
     try {
       const params = new URLSearchParams();
       if (query.trim()) params.set("q", query.trim());
