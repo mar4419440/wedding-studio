@@ -10,6 +10,7 @@ import type { SettingsMap } from "@/lib/settings";
 import { downloadIcs, parseDateTime } from "@/lib/ics";
 import { Divider } from "@/components/divider";
 import { Sparkles } from "@/components/site/sparkles";
+import { imageUrl } from "@/lib/drive";
 
 export interface InviteData {
   family: {
@@ -59,9 +60,10 @@ export function InviteClient({ family, settings, qrSrc }: InviteData) {
         className="absolute inset-0"
         style={{
           backgroundImage: settings.hero_image_url
-            ? `linear-gradient(to bottom, var(--hero-overlay-a), var(--hero-overlay-b)), url(${settings.hero_image_url})`
+            ? `linear-gradient(to bottom, var(--hero-overlay-a), var(--hero-overlay-b)), url(${imageUrl(settings.hero_image_url)})`
             : undefined,
           backgroundSize: "cover",
+
           backgroundPosition: "center",
         }}
       />

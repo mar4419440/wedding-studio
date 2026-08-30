@@ -7,6 +7,13 @@ export type ThemeId =
   | "nocturne-elegance"
   | "video-lumina";
 
+export interface HeroMediaConfig {
+  type: "image" | "video";
+  src: string;
+  poster?: string;
+  overlay: string;
+}
+
 export interface TypographyConfig {
   headingFontFamily: string; // The CSS variable of the Google Font to use as fallback
   headingFontFamilyAr: string; // The CSS variable for the Arabic font
@@ -28,6 +35,7 @@ export interface ThemeMeta {
   taglineAr: string;
   swatch: { surface: string; primary: string; secondary: string };
   typography: TypographyConfig;
+  heroMedia: HeroMediaConfig;
 }
 
 /**
@@ -54,6 +62,11 @@ export const THEMES: ThemeMeta[] = [
         sectionTitle: '/themes/ethereal-union-1/section-title.svg',
       },
     },
+    heroMedia: {
+      type: 'image',
+      src: '/images/hero/theme-1.webp',
+      overlay: 'rgba(255, 255, 255, 0.4)',
+    },
   },
   {
     id: "ethereal-union-2",
@@ -73,6 +86,11 @@ export const THEMES: ThemeMeta[] = [
         heroNames: '/themes/ethereal-union-2/hero-names.svg',
         sectionTitle: '/themes/ethereal-union-2/section-title.svg',
       },
+    },
+    heroMedia: {
+      type: 'image',
+      src: '/images/hero/theme-2.webp',
+      overlay: 'rgba(255, 255, 255, 0.5)',
     },
   },
   {
@@ -94,6 +112,11 @@ export const THEMES: ThemeMeta[] = [
         sectionTitle: '/themes/emerald-gilt/section-title.svg',
       },
     },
+    heroMedia: {
+      type: 'image',
+      src: '/images/hero/theme-3.webp',
+      overlay: 'rgba(6, 64, 43, 0.3)',
+    },
   },
   {
     id: "paper-terracotta",
@@ -113,6 +136,11 @@ export const THEMES: ThemeMeta[] = [
         heroNames: '/themes/paper-terracotta/hero-names.svg',
         sectionTitle: '/themes/paper-terracotta/section-title.svg',
       },
+    },
+    heroMedia: {
+      type: 'image',
+      src: '/images/hero/theme-4.webp',
+      overlay: 'rgba(249, 249, 249, 0.6)',
     },
   },
   {
@@ -134,6 +162,11 @@ export const THEMES: ThemeMeta[] = [
         sectionTitle: '/themes/botanical-hearth/section-title.svg',
       },
     },
+    heroMedia: {
+      type: 'image',
+      src: '/images/hero/theme-5.webp',
+      overlay: 'rgba(252, 249, 244, 0.5)',
+    },
   },
   {
     id: "nocturne-elegance",
@@ -154,6 +187,11 @@ export const THEMES: ThemeMeta[] = [
         sectionTitle: '/themes/nocturne-elegance/section-title.svg',
       },
     },
+    heroMedia: {
+      type: 'image',
+      src: '/images/hero/theme-6.webp',
+      overlay: 'rgba(19, 19, 19, 0.6)',
+    },
   },
   {
     id: "video-lumina",
@@ -173,6 +211,12 @@ export const THEMES: ThemeMeta[] = [
         heroNames: '/themes/video-lumina/hero-names.svg',
         sectionTitle: '/themes/video-lumina/section-title.svg',
       },
+    },
+    heroMedia: {
+      type: 'video',
+      src: '/videos/curtain-loop-theme7.mp4',
+      poster: '/images/hero/theme-7-poster.jpg',
+      overlay: 'rgba(10, 10, 10, 0.3)',
     },
   },
 ];

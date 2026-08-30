@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useUi } from "@/store/ui";
 import type { SettingsMap } from "@/lib/settings";
 import { EnvelopeIntro } from "./EnvelopeIntro";
-import { CurtainHero } from "./CurtainHero";
+import { DynamicHero } from "./DynamicHero";
 import { PortfolioSection } from "../gallery/PortfolioSection";
 import type { GalleryMedia } from "../gallery/types";
 
@@ -43,11 +43,11 @@ export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSect
       {!introFinished && <EnvelopeIntro />}
       
       {/* 
-        We always render CurtainHero but it controls its own opacity based on introFinished.
+        We always render DynamicHero but it controls its own opacity based on introFinished.
         This ensures the video can start preloading/playing in the background 
         while the envelope intro is finishing.
       */}
-      <CurtainHero 
+      <DynamicHero 
         family={family} 
         settings={settings} 
         qrCodeDataUrl={qrCodeDataUrl} 

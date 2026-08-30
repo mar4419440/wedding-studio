@@ -6,8 +6,10 @@ import { Users, CheckCircle } from "lucide-react";
 import type { SettingsMap } from "@/lib/settings";
 import { GuestQrCard } from "./GuestQrCard";
 import { WeddingCalendar } from "./WeddingCalendar";
+import { HeroBackground } from "@/components/ui/HeroBackground";
+import { DEFAULT_THEME } from "@/lib/themes";
 
-interface CurtainHeroProps {
+interface DynamicHeroProps {
   family: {
     id: string;
     nameEn: string;
@@ -17,13 +19,18 @@ interface CurtainHeroProps {
   };
   settings: SettingsMap;
   qrCodeDataUrl: string;
+  qrCodeDataUrl: string;
 }
 
-export function CurtainHero({ family, settings, qrCodeDataUrl }: CurtainHeroProps) {
+export function DynamicHero({ family, settings, qrCodeDataUrl }: DynamicHeroProps) {
   const language = useUi((s) => s.language);
   const isAr = language === "ar";
   
   const introFinished = useUi((s) => s.introFinished);
+  const previewTheme = useUi((s) => s.previewTheme);
+  const routeTheme = useUi((s) => s.routeTheme);
+  const activeTheme = previewTheme || routeTheme || settings.active_theme || DEFAULT_THEME;
+
   
   const [rsvpStatus, setRsvpStatus] = useState(family.rsvpStatus);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,21 +66,8 @@ export function CurtainHero({ family, settings, qrCodeDataUrl }: CurtainHeroProp
 
   return (
     <div className={`relative w-full min-h-screen bg-black overflow-hidden transition-opacity duration-700 ease-in-out ${introFinished ? "opacity-100" : "opacity-0"}`} dir={isAr ? "rtl" : "ltr"}>
-      {/* Background Looping Curtain Video */}
-      <video
-        src="/curtain-loop-new.mp4"
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        autoPlay
-        muted
-        playsInline
-        onTimeUpdate={(e) => {
-          const video = e.currentTarget;
-          if (video.duration && video.currentTime >= video.duration - 0.5) {
-            video.currentTime = 0;
-            video.play();
-          }
-        }}
-      />
+      {/* Dynamic Background (Image or Video per theme) */}
+      <HeroBackground activeThemeId={activeTheme} />
       
       {/* Content Overlay */}
       <div className="relative z-10 w-full min-h-screen flex items-center justify-center p-4 py-12">

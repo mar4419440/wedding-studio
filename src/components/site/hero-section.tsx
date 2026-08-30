@@ -6,9 +6,14 @@ import type { SettingsMap } from "@/lib/settings";
 import { Divider } from "@/components/divider";
 import { Sparkles } from "@/components/site/sparkles";
 import { ThemedHeading } from "@/components/ui/ThemedHeading";
+import { HeroBackground } from "@/components/ui/HeroBackground";
+import { DEFAULT_THEME } from "@/lib/themes";
 
 export function HeroSection({ settings }: { settings: SettingsMap }) {
   const language = useUi((s) => s.language);
+  const previewTheme = useUi((s) => s.previewTheme);
+  const routeTheme = useUi((s) => s.routeTheme);
+  const activeTheme = previewTheme || routeTheme || settings.active_theme || DEFAULT_THEME;
   const otherLang = language === "en" ? "ar" : "en";
 
   const names =
@@ -22,12 +27,8 @@ export function HeroSection({ settings }: { settings: SettingsMap }) {
     <section
       id="top"
       className="relative flex min-h-[92vh] items-center justify-center overflow-hidden pt-24"
-      style={{
-        backgroundImage: `linear-gradient(to bottom, var(--hero-overlay-a), var(--hero-overlay-b)), url(${settings.hero_image_url})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
     >
+      <HeroBackground activeThemeId={activeTheme} />
       <Sparkles />
       <div className="theme-pattern-layer" aria-hidden />
 
