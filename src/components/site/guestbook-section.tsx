@@ -21,7 +21,7 @@ export function GuestbookSection() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   useEffect(() => {
-    fetch("/api/guestbook")
+    fetch("/api/guestbook", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) setComments(data);

@@ -20,7 +20,7 @@ export default function AdminGuestbookPage() {
       // In a real app we'd need an admin GET route that returns all comments,
       // including unapproved. For simplicity, since this is client-side, 
       // let's assume we create one.
-      const res = await fetch("/api/admin/guestbook");
+      const res = await fetch("/api/admin/guestbook", { cache: "no-store" });
       if (res.ok) {
         setComments(await res.json());
       }
