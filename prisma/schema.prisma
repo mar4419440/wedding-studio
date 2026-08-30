@@ -52,3 +52,13 @@ model Media {
 
   @@index([kind, order])
 }
+
+model GuestbookEntry {
+  id         String   @id @default(uuid())
+  name       String
+  message    String   @db.Text
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([isApproved])
+}

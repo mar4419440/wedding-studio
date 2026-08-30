@@ -10,6 +10,7 @@ import {
   ScanLine,
   Settings,
   Users,
+  MessageSquare,
 } from "lucide-react";
 
 const NAV = [
@@ -17,6 +18,7 @@ const NAV = [
   { href: "/admin/invitations", label: "Invitations", icon: Users },
   { href: "/admin/checkin", label: "Check-in", icon: ScanLine },
   { href: "/admin/media", label: "Media", icon: Images },
+  { href: "/admin/guestbook", label: "Guestbook", icon: MessageSquare },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 

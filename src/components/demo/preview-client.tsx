@@ -9,6 +9,7 @@ import { HeroSection } from "@/components/site/hero-section";
 import { StoryTimeline, type StoryEntry } from "@/components/site/story-timeline";
 import { GallerySection, type GalleryImage } from "@/components/site/gallery-section";
 import { EventsSection } from "@/components/site/events-section";
+import { GuestbookSection } from "@/components/site/guestbook-section";
 import { ThemeSwitcherFab } from "@/components/site/theme-switcher-fab";
 
 export interface PreviewData {
@@ -52,6 +53,7 @@ export function PreviewClient({ settings, story, gallery, initialTheme }: Previe
         <StoryTimeline entries={story} />
         <GallerySection images={gallery} />
         <EventsSection settings={settings} />
+        <GuestbookSection />
       </main>
       <SiteFooter names={secondaryNames} />
       <ThemeSwitcherFab baseTheme={settings.active_theme} />
