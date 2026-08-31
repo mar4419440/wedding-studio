@@ -188,7 +188,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
         <video
           ref={envelopeRef}
           src={envelopeSrc}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-fill"
           autoPlay
           muted
           playsInline

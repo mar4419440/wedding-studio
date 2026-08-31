@@ -25,7 +25,7 @@ export function EnvelopeIntro({ activeThemeId }: { activeThemeId: string }) {
       <video
         ref={videoRef}
         src={envelopeSrc}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-fill"
         autoPlay
         muted
         playsInline
