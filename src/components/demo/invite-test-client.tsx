@@ -192,6 +192,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
           autoPlay
           muted
           playsInline
+          preload="auto"
           onTimeUpdate={handleEnvelopeTimeUpdate}
         />
       </div>

@@ -47,7 +47,7 @@ export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSect
 
   return (
     <>
-      {!introFinished && hasEnvelope && <EnvelopeIntro />}
+      {!introFinished && hasEnvelope && <EnvelopeIntro activeThemeId={activeThemeId} />}
       
       {/* 
         We always render DynamicHero but it controls its own opacity based on introFinished.

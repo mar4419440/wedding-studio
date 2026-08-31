@@ -4,13 +4,10 @@ import { useEffect, useRef } from "react";
 import { useUi } from "@/store/ui";
 import { getTheme, DEFAULT_THEME } from "@/lib/themes";
 
-export function EnvelopeIntro() {
+export function EnvelopeIntro({ activeThemeId }: { activeThemeId: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const setIntroFinished = useUi((s) => s.setIntroFinished);
-  const previewTheme = useUi((s) => s.previewTheme);
-  const routeTheme = useUi((s) => s.routeTheme);
   
-  const activeThemeId = routeTheme ?? previewTheme ?? DEFAULT_THEME;
   const theme = getTheme(activeThemeId);
   
   const envelopeSrc = theme?.envelopeSrc || "/envelope-open.mp4";
@@ -32,6 +29,7 @@ export function EnvelopeIntro() {
         autoPlay
         muted
         playsInline
+        preload="auto"
         onTimeUpdate={handleTimeUpdate}
       />
     </div>
