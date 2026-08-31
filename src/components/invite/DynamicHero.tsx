@@ -19,9 +19,10 @@ interface DynamicHeroProps {
   };
   settings: SettingsMap;
   qrCodeDataUrl: string;
+  hasEnvelope?: boolean;
 }
 
-export function DynamicHero({ family, settings, qrCodeDataUrl }: DynamicHeroProps) {
+export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = true }: DynamicHeroProps) {
   const language = useUi((s) => s.language);
   const isAr = language === "ar";
   
@@ -30,7 +31,6 @@ export function DynamicHero({ family, settings, qrCodeDataUrl }: DynamicHeroProp
   const routeTheme = useUi((s) => s.routeTheme);
   const activeTheme = previewTheme || routeTheme || settings.active_theme || DEFAULT_THEME;
 
-  
   const [rsvpStatus, setRsvpStatus] = useState(family.rsvpStatus);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -63,8 +63,11 @@ export function DynamicHero({ family, settings, qrCodeDataUrl }: DynamicHeroProp
     }
   };
 
+  // If there is no envelope, we are already "finished" and should be visible immediately without a fade delay
+  const isVisible = !hasEnvelope || introFinished;
+
   return (
-    <div className={`relative w-full min-h-screen bg-black overflow-hidden transition-opacity duration-700 ease-in-out ${introFinished ? "opacity-100" : "opacity-0"}`} dir={isAr ? "rtl" : "ltr"}>
+    <div className={`relative w-full min-h-screen bg-black overflow-hidden transition-opacity duration-700 ease-in-out ${isVisible ? "opacity-100" : "opacity-0"}`} dir={isAr ? "rtl" : "ltr"}>
       {/* Dynamic Background (Image or Video per theme) */}
       <HeroBackground activeThemeId={activeTheme} />
       

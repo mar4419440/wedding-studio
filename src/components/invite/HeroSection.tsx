@@ -42,8 +42,10 @@ export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSect
     setMounted(true);
   }, [setIntroFinished, hasEnvelope]);
 
-  // Don't render until mounted to avoid hydration mismatch with sessionStorage
-  if (!mounted) return null;
+  // Only block render for hydration if we actually have an envelope
+  // (because we need to check sessionStorage to see if they already watched it)
+  // For image themes, render immediately on the server!
+  if (!mounted && hasEnvelope) return null;
 
   return (
     <>
