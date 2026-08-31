@@ -10,7 +10,7 @@ interface HeroBackgroundProps {
 
 export function HeroBackground({ activeThemeId }: HeroBackgroundProps) {
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden bg-black z-0 pointer-events-none">
+    <div className="fixed inset-0 w-full h-screen overflow-hidden bg-black z-0 pointer-events-none">
       {THEMES.map((theme) => {
         const isActive = theme.id === activeThemeId;
         return (
@@ -65,7 +65,7 @@ function ThemeMediaLayer({ theme, isActive }: { theme: ThemeMeta; isActive: bool
           ref={videoRef}
           src={src}
           poster={poster}
-          className="absolute inset-0 w-full h-full object-contain"
+          className="absolute inset-0 w-full h-full object-cover"
           autoPlay={isActive}
           muted
           loop
