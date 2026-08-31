@@ -208,42 +208,73 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
         <HeroBackground activeThemeId={activeThemeId} />
 
         {/* Invitation Content Overlay */}
-        <div className="relative z-10 w-full min-h-screen flex items-center justify-center p-4 py-12">
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 p-6 md:p-8 rounded-3xl shadow-2xl max-w-md w-full flex flex-col items-center gap-6">
+        <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-start p-4 py-12 md:py-20">
+          
+          {/* Main Stack Container */}
+          <div className="w-full max-w-md flex flex-col items-center gap-6 md:gap-8 mt-4 md:mt-12">
+            
+            {/* Main Invitation Card */}
+            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl flex flex-col items-center text-center">
+              
+              {/* Header */}
+              <div className="space-y-3 mb-6">
+                <h1 className={`text-5xl md:text-6xl font-serif text-white tracking-wide drop-shadow-lg ${isAr ? "font-arabic" : ""}`}>
+                  {coupleName}
+                </h1>
+                <p className="text-white/80 text-xs md:text-sm tracking-[0.2em] uppercase font-medium">
+                  {isAr ? "يدعوانكم لحضور حفل زفافهما" : "Invite you to celebrate their wedding"}
+                </p>
+              </div>
 
-            {/* Header */}
-            <div className="text-center space-y-2 mb-2">
-              <h1 className={`text-4xl md:text-5xl font-serif text-white tracking-wide drop-shadow-md ${isAr ? "font-arabic" : ""}`}>
-                {coupleName}
-              </h1>
-              <p className="text-white/90 text-sm tracking-wider uppercase font-medium">
-                {isAr ? "يدعوانكم لحضور حفل زفافهما" : "Invite you to celebrate their wedding"}
-              </p>
-            </div>
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mb-6" />
 
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-
-            {/* Guest Info */}
-            <div className="text-center space-y-2 w-full">
-              <p className="text-xs uppercase tracking-widest text-white/70 font-medium">
-                {isAr ? "مرحباً" : "Welcome"}
-              </p>
-              <h2 className="text-2xl font-serif font-medium text-white drop-shadow">{familyName}</h2>
-
-              <div className="flex items-center justify-center gap-3 mt-4 text-sm font-medium">
-                <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full border border-white/20 text-white">
-                  <Users className="w-4 h-4" />
-                  <span>{isAr ? `دعوة لـ ${mockFamily.guestCount} أشخاص` : `Reserved for ${mockFamily.guestCount} guests`}</span>
+              {/* Guest Info */}
+              <div className="space-y-4 w-full">
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium mb-1">
+                    {isAr ? "مرحباً" : "Welcome"}
+                  </p>
+                  <h2 className="text-2xl md:text-3xl font-serif font-medium text-white drop-shadow-md">{familyName}</h2>
+                </div>
+                
+                <div className="flex items-center justify-center gap-3 text-sm font-medium">
+                  <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full border border-white/10 text-white shadow-inner">
+                    <Users className="w-4 h-4" />
+                    <span>{isAr ? `دعوة لـ ${mockFamily.guestCount} أشخاص` : `Reserved for ${mockFamily.guestCount} guests`}</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Mock QR Code */}
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-5 rounded-2xl w-full flex flex-col items-center gap-3">
-              <div className="bg-white p-4 rounded-xl shadow-inner">
+            {/* Event Details Card */}
+            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl">
+              <div className="flex items-center gap-2 mb-3">
+                <CalendarIcon className="w-5 h-5 text-white/80" />
+                <span className="font-medium text-lg text-white">{isAr ? mockDate.ar : mockDate.en}</span>
+              </div>
+              <div className="space-y-2 text-sm text-white/80">
+                <p className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 opacity-80" />
+                  {isAr ? mockTime.ar : mockTime.en}
+                </p>
+                <p className="opacity-90">{isAr ? mockVenue.ar : mockVenue.en}</p>
+              </div>
+            </div>
+
+            {/* Entrance Pass Card */}
+            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl flex flex-col items-center">
+              <div className="flex items-center justify-center gap-2 mb-4 w-full">
+                <div className="h-px bg-white/20 w-12" />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-white/60 font-medium">
+                  {isAr ? "بطاقة الدخول" : "Entrance Pass"}
+                </span>
+                <div className="h-px bg-white/20 w-12" />
+              </div>
+
+              {/* Mock QR Code */}
+              <div className="bg-white p-4 rounded-xl shadow-inner mb-3">
                 <div className="w-[160px] h-[160px] bg-gray-200 rounded-lg flex items-center justify-center">
                   <svg viewBox="0 0 100 100" className="w-full h-full p-2">
-                    {/* Simple mock QR pattern */}
                     <rect x="0" y="0" width="100" height="100" fill="white" />
                     <rect x="5" y="5" width="25" height="25" fill="black" />
                     <rect x="70" y="5" width="25" height="25" fill="black" />
@@ -272,28 +303,13 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs text-white/60 text-center max-w-[250px]">
+              <p className="text-xs text-white/80 text-center max-w-[250px] font-medium drop-shadow">
                 {isAr ? "يرجى إبراز هذا الرمز عند بوابة الدخول" : "Present this QR code at the entrance for check-in"}
               </p>
             </div>
 
-            {/* Event Details */}
-            <div className="w-full bg-white/5 rounded-2xl p-5 border border-white/10">
-              <div className="flex items-center gap-2 mb-3">
-                <CalendarIcon className="w-5 h-5 text-white/80" />
-                <span className="font-medium text-lg">{isAr ? mockDate.ar : mockDate.en}</span>
-              </div>
-              <div className="space-y-2 text-sm text-white/80">
-                <p className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  {isAr ? mockTime.ar : mockTime.en}
-                </p>
-                <p>{isAr ? mockVenue.ar : mockVenue.en}</p>
-              </div>
-            </div>
-
             {/* Test Label */}
-            <div className="w-full text-center">
+            <div className="w-full text-center mt-4">
               <span className="text-[10px] uppercase tracking-widest text-white/30 font-medium">
                 {isAr ? "معاينة تجريبية" : "Test Preview"}
               </span>

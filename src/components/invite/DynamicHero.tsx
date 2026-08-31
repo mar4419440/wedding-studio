@@ -69,56 +69,61 @@ export function DynamicHero({ family, settings, qrCodeDataUrl }: DynamicHeroProp
       <HeroBackground activeThemeId={activeTheme} />
       
       {/* Content Overlay */}
-      <div className="relative z-10 w-full min-h-screen flex items-center justify-center p-4 py-12">
-        <div className="bg-black/30 backdrop-blur-sm border border-white/10 p-6 md:p-8 rounded-3xl shadow-2xl max-w-md w-full flex flex-col items-center gap-6">
+      <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-start p-4 py-12 md:py-20">
+        
+        {/* Main Stack Container */}
+        <div className="w-full max-w-md flex flex-col items-center gap-6 md:gap-8 mt-4 md:mt-12">
           
-          {/* Header */}
-          <div className="text-center space-y-2 mb-2">
-            <h1 className={`text-4xl md:text-5xl font-serif text-white tracking-wide drop-shadow-md ${isAr ? 'font-arabic' : ''}`}>
-              {coupleName}
-            </h1>
-            <p className="text-white/90 text-sm tracking-wider uppercase font-medium">
-              {isAr ? "يدعوانكم لحضور حفل زفافهما" : "Invite you to celebrate their wedding"}
-            </p>
-          </div>
-
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-
-          {/* Guest Info */}
-          <div className="text-center space-y-2 w-full">
-            <p className="text-xs uppercase tracking-widest text-white/70 font-medium">
-              {isAr ? "مرحباً" : "Welcome"}
-            </p>
-            <h2 className="text-2xl font-serif font-medium text-white drop-shadow">{familyName}</h2>
+          {/* Main Invitation Card */}
+          <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl flex flex-col items-center text-center">
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 text-sm font-medium">
-              <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full border border-white/20 text-white">
-                <Users className="w-4 h-4" />
-                <span>{isAr ? `دعوة لـ ${family.guestCount} أشخاص` : `Reserved for ${family.guestCount} guests`}</span>
-              </div>
-              
-              <div className={`px-3 py-1.5 rounded-full border ${statusColor}`}>
-                {rsvpStatus}
-              </div>
+            {/* Header */}
+            <div className="space-y-3 mb-6">
+              <h1 className={`text-5xl md:text-6xl font-serif text-white tracking-wide drop-shadow-lg ${isAr ? 'font-arabic' : ''}`}>
+                {coupleName}
+              </h1>
+              <p className="text-white/80 text-xs md:text-sm tracking-[0.2em] uppercase font-medium">
+                {isAr ? "يدعوانكم لحضور حفل زفافهما" : "Invite you to celebrate their wedding"}
+              </p>
             </div>
 
-            {rsvpStatus !== "CONFIRMED" && (
-              <button
-                onClick={handleConfirm}
-                disabled={isSubmitting}
-                className="mt-4 w-full flex items-center justify-center gap-2 bg-[#C9A66B] hover:bg-[#b59560] text-white font-medium py-2.5 px-4 rounded-xl shadow-lg transition-colors duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                <CheckCircle className="w-5 h-5" />
-                {isSubmitting ? (isAr ? "جاري التأكيد..." : "Confirming...") : (isAr ? "سأحضر بالتأكيد" : "I will come")}
-              </button>
-            )}
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mb-6" />
+
+            {/* Guest Info */}
+            <div className="space-y-4 w-full">
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium mb-1">
+                  {isAr ? "مرحباً" : "Welcome"}
+                </p>
+                <h2 className="text-2xl md:text-3xl font-serif font-medium text-white drop-shadow-md">{familyName}</h2>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm font-medium">
+                <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full border border-white/10 text-white shadow-inner">
+                  <Users className="w-4 h-4" />
+                  <span>{isAr ? `دعوة لـ ${family.guestCount} أشخاص` : `Reserved for ${family.guestCount} guests`}</span>
+                </div>
+                
+                <div className={`px-4 py-2 rounded-full border shadow-inner ${statusColor}`}>
+                  {rsvpStatus}
+                </div>
+              </div>
+
+              {rsvpStatus !== "CONFIRMED" && (
+                <button
+                  onClick={handleConfirm}
+                  disabled={isSubmitting}
+                  className="mt-4 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#D4AF37] to-[#AA8034] hover:from-[#e3be47] hover:to-[#b88c3a] text-white font-medium py-3.5 px-4 rounded-xl shadow-[0_4px_14px_0_rgba(212,175,55,0.39)] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed transform hover:scale-[1.02]"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  {isSubmitting ? (isAr ? "جاري التأكيد..." : "Confirming...") : (isAr ? "سأحضر بالتأكيد" : "I will come")}
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="w-full mt-2">
-            <GuestQrCard qrCodeDataUrl={qrCodeDataUrl} />
-          </div>
-
-          <div className="w-full mt-2">
+          {/* Calendar & Venue Card */}
+          <div className="w-full">
             <WeddingCalendar 
               weddingDateStr={settings.wedding_date_en} 
               timeEn={settings.wedding_time_en}
@@ -126,6 +131,18 @@ export function DynamicHero({ family, settings, qrCodeDataUrl }: DynamicHeroProp
               venueEn={settings.venue_en}
               venueAr={settings.venue_ar}
             />
+          </div>
+
+          {/* Entrance Pass Card */}
+          <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="h-px bg-white/20 w-12" />
+              <span className="text-[10px] uppercase tracking-[0.2em] text-white/60 font-medium">
+                {isAr ? "بطاقة الدخول" : "Entrance Pass"}
+              </span>
+              <div className="h-px bg-white/20 w-12" />
+            </div>
+            <GuestQrCard qrCodeDataUrl={qrCodeDataUrl} />
           </div>
 
         </div>
