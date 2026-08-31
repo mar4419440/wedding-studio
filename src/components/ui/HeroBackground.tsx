@@ -65,7 +65,7 @@ function ThemeMediaLayer({ theme, isActive }: { theme: ThemeMeta; isActive: bool
           ref={videoRef}
           src={src}
           poster={poster}
-          className="absolute inset-0 w-full h-full object-fill"
+          className="absolute inset-0 w-full h-full object-cover"
           autoPlay={isActive}
           muted
           loop
