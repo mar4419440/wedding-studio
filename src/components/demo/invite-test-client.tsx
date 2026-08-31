@@ -20,11 +20,12 @@ export function InviteTestClient() {
   const setPreviewTheme = useUi((s) => s.setPreviewTheme);
   const routeTheme = useUi((s) => s.routeTheme);
 
-  const activeThemeId = routeTheme ?? previewTheme ?? DEFAULT_THEME;
-  const theme = getTheme(activeThemeId);
-
   // Video themes are themes that have envelopeSrc defined
   const videoThemes = THEMES.filter((t) => t.envelopeSrc);
+  const defaultVideoTheme = videoThemes[0]?.id ?? DEFAULT_THEME;
+
+  const activeThemeId = routeTheme ?? previewTheme ?? defaultVideoTheme;
+  const theme = getTheme(activeThemeId);
 
   // --- Envelope intro state ---
   const envelopeRef = useRef<HTMLVideoElement>(null);
