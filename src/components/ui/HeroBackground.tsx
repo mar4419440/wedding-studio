@@ -6,9 +6,10 @@ import { THEMES, ThemeMeta } from "@/lib/themes";
 
 interface HeroBackgroundProps {
   activeThemeId: string;
+  onReady?: () => void;
 }
 
-export function HeroBackground({ activeThemeId }: HeroBackgroundProps) {
+export function HeroBackground({ activeThemeId, onReady }: HeroBackgroundProps) {
   return (
     <div className="fixed inset-0 w-full h-screen overflow-hidden bg-black z-0 pointer-events-none">
       {THEMES.map((theme) => {
@@ -18,6 +19,7 @@ export function HeroBackground({ activeThemeId }: HeroBackgroundProps) {
             key={theme.id} 
             theme={theme} 
             isActive={isActive} 
+            onReady={isActive ? onReady : undefined}
           />
         );
       })}
@@ -25,7 +27,7 @@ export function HeroBackground({ activeThemeId }: HeroBackgroundProps) {
   );
 }
 
-function ThemeMediaLayer({ theme, isActive }: { theme: ThemeMeta; isActive: boolean }) {
+function ThemeMediaLayer({ theme, isActive, onReady }: { theme: ThemeMeta; isActive: boolean; onReady?: () => void }) {
   const overlay = theme.heroMedia.overlay;
   const src = theme.curtainSrc || theme.heroMedia.src;
   const poster = theme.curtainPoster || theme.heroMedia.poster;
@@ -59,6 +61,7 @@ function ThemeMediaLayer({ theme, isActive }: { theme: ThemeMeta; isActive: bool
           priority={isActive}
           className="object-cover object-center"
           sizes="100vw"
+          onLoad={isActive ? onReady : undefined}
         />
       ) : (
         <video
@@ -71,6 +74,7 @@ function ThemeMediaLayer({ theme, isActive }: { theme: ThemeMeta; isActive: bool
           loop
           playsInline
           preload={isActive ? "auto" : "none"}
+          onCanPlayThrough={isActive ? onReady : undefined}
         />
       )}
       

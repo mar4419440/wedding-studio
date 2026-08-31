@@ -20,9 +20,10 @@ interface DynamicHeroProps {
   settings: SettingsMap;
   qrCodeDataUrl: string;
   hasEnvelope?: boolean;
+  onReady?: () => void;
 }
 
-export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = true }: DynamicHeroProps) {
+export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = true, onReady }: DynamicHeroProps) {
   const language = useUi((s) => s.language);
   const isAr = language === "ar";
   
@@ -69,7 +70,7 @@ export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = tru
   return (
     <div className={`relative w-full min-h-screen bg-black overflow-hidden transition-opacity duration-700 ease-in-out ${isVisible ? "opacity-100" : "opacity-0"}`} dir={isAr ? "rtl" : "ltr"}>
       {/* Dynamic Background (Image or Video per theme) */}
-      <HeroBackground activeThemeId={activeTheme} />
+      <HeroBackground activeThemeId={activeTheme} onReady={onReady} />
       
       {/* Content Overlay */}
       <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-start p-4 py-12 md:py-20">

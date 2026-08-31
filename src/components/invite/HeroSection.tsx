@@ -6,6 +6,7 @@ import type { SettingsMap } from "@/lib/settings";
 import { getTheme, DEFAULT_THEME } from "@/lib/themes";
 import { EnvelopeIntro } from "./EnvelopeIntro";
 import { DynamicHero } from "./DynamicHero";
+import { ThemeLoader } from "../ui/ThemeLoader";
 import { PortfolioSection } from "../gallery/PortfolioSection";
 import type { GalleryMedia } from "../gallery/types";
 
@@ -28,10 +29,13 @@ export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSect
   const previewTheme = useUi((s) => s.previewTheme);
   const routeTheme = useUi((s) => s.routeTheme);
   const [mounted, setMounted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   const activeThemeId = routeTheme ?? previewTheme ?? settings.active_theme ?? DEFAULT_THEME;
   const theme = getTheme(activeThemeId);
   const hasEnvelope = !!theme?.envelopeSrc;
+  
+  const coupleName = useUi((s) => s.language) === "ar" ? settings.couple_name_ar : settings.couple_name_en;
 
   useEffect(() => {
     const hasSeenIntro = sessionStorage.getItem("hasSeenEnvelopeIntro");
@@ -40,30 +44,35 @@ export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSect
       setIntroFinished(true);
     }
     setMounted(true);
+    
+    // Simulate loading for heavy assets, but fallback after 2s if onReady isn't fired
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 2000);
+    return () => clearTimeout(timer);
   }, [setIntroFinished, hasEnvelope]);
 
   // Only block render for hydration if we actually have an envelope
-  // (because we need to check sessionStorage to see if they already watched it)
-  // For image themes, render immediately on the server!
   if (!mounted && hasEnvelope) return null;
 
   return (
     <>
-      {!introFinished && hasEnvelope && <EnvelopeIntro activeThemeId={activeThemeId} />}
+      <ThemeLoader activeThemeId={activeThemeId} coupleName={coupleName} isReady={isReady} />
       
-      {/* 
-        We always render DynamicHero but it controls its own opacity based on introFinished.
-        This ensures the video can start preloading/playing in the background 
-        while the envelope intro is finishing.
-      */}
+      {!introFinished && hasEnvelope && (
+        <EnvelopeIntro 
+          activeThemeId={activeThemeId} 
+          onReady={() => setIsReady(true)} 
+        />
+      )}
+      
       <DynamicHero 
         family={family} 
         settings={settings} 
         qrCodeDataUrl={qrCodeDataUrl} 
+        hasEnvelope={hasEnvelope}
+        onReady={!hasEnvelope ? () => setIsReady(true) : undefined}
       />
-      
-      {/* Portfolio Gallery Section appears below the hero */}
-      {/* <PortfolioSection media={media} /> */}
     </>
   );
 }

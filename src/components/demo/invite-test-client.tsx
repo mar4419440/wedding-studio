@@ -103,11 +103,23 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
   return (
     <div className="relative w-full min-h-screen bg-black text-white" dir={isAr ? "rtl" : "ltr"}>
 
-      {/* ── Theme Selector (floating top-right) ── */}
-      <div className="fixed top-4 right-4 z-[60]">
+      {/* ── Top-Right Overlay (Theme Selector & Language Toggle) ── */}
+      <div className="fixed top-4 right-4 z-[60] flex items-center gap-2">
+        {/* Language Toggle */}
+        <button
+          onClick={() => {
+            const setLang = useUi.getState().setLanguage;
+            setLang(isAr ? "en" : "ar");
+          }}
+          className="flex items-center justify-center bg-black/60 backdrop-blur-md border border-white/20 text-white text-sm font-medium h-10 px-3 rounded-xl hover:bg-black/80 transition-colors shadow-lg"
+        >
+          {isAr ? "EN" : "عربي"}
+        </button>
+
+        {/* Theme Selector */}
         <button
           onClick={() => setSelectorOpen(!selectorOpen)}
-          className="flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-sm px-4 py-2.5 rounded-xl hover:bg-black/80 transition-colors shadow-lg"
+          className="flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-sm h-10 px-4 rounded-xl hover:bg-black/80 transition-colors shadow-lg"
         >
           <span className="w-3 h-3 rounded-full" style={{ backgroundColor: theme?.swatch.primary }} />
           {theme?.nameEn || "Select Theme"}
@@ -180,22 +192,23 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
 
       {/* ── Phase 1: Envelope Intro (only for video themes) ── */}
       {hasEnvelope && (
-      <div
-        className={`fixed inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-700 ${
-          phase === "envelope" ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <video
-          ref={envelopeRef}
-          src={envelopeSrc}
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          onTimeUpdate={handleEnvelopeTimeUpdate}
-        />
-      </div>
+        <div
+          className={`fixed inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-700 ${
+            phase === "envelope" ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <video
+            ref={envelopeRef}
+            src={envelopeSrc}
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            onTimeUpdate={handleEnvelopeTimeUpdate}
+            onCanPlayThrough={() => setIsReady(true)}
+          />
+        </div>
       )}
 
       {/* ── Phase 2: Hero with Curtain Loop ── */}
@@ -205,7 +218,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
         }`}
       >
         {/* Curtain video background */}
-        <HeroBackground activeThemeId={activeThemeId} />
+        <HeroBackground activeThemeId={activeThemeId} onReady={!hasEnvelope ? () => setIsReady(true) : undefined} />
 
         {/* Invitation Content Overlay */}
         <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-start p-4 py-12 md:py-20">
