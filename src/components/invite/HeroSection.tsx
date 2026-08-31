@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useUi } from "@/store/ui";
 import type { SettingsMap } from "@/lib/settings";
+import { getTheme, DEFAULT_THEME } from "@/lib/themes";
 import { EnvelopeIntro } from "./EnvelopeIntro";
 import { DynamicHero } from "./DynamicHero";
 import { PortfolioSection } from "../gallery/PortfolioSection";
@@ -24,23 +25,29 @@ interface HeroSectionProps {
 export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSectionProps) {
   const introFinished = useUi((s) => s.introFinished);
   const setIntroFinished = useUi((s) => s.setIntroFinished);
+  const previewTheme = useUi((s) => s.previewTheme);
+  const routeTheme = useUi((s) => s.routeTheme);
   const [mounted, setMounted] = useState(false);
 
+  const activeThemeId = routeTheme ?? previewTheme ?? settings.active_theme ?? DEFAULT_THEME;
+  const theme = getTheme(activeThemeId);
+  const hasEnvelope = !!theme?.envelopeSrc;
+
   useEffect(() => {
-    // Check if the user has already seen the intro this session
     const hasSeenIntro = sessionStorage.getItem("hasSeenEnvelopeIntro");
-    if (hasSeenIntro === "true") {
+    if (hasSeenIntro === "true" || !hasEnvelope) {
+      // Skip envelope for image-only themes or if already seen
       setIntroFinished(true);
     }
     setMounted(true);
-  }, [setIntroFinished]);
+  }, [setIntroFinished, hasEnvelope]);
 
   // Don't render until mounted to avoid hydration mismatch with sessionStorage
   if (!mounted) return null;
 
   return (
     <>
-      {!introFinished && <EnvelopeIntro />}
+      {!introFinished && hasEnvelope && <EnvelopeIntro />}
       
       {/* 
         We always render DynamicHero but it controls its own opacity based on introFinished.
@@ -58,3 +65,4 @@ export function HeroSection({ family, settings, qrCodeDataUrl, media }: HeroSect
     </>
   );
 }
+
