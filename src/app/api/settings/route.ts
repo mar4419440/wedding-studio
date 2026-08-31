@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { isAuthenticated } from "@/lib/auth";
 import { getSettings } from "@/lib/settings";
@@ -56,5 +57,8 @@ export async function PATCH(request: Request) {
     });
   }
   const all = await getSettings();
+  
+  revalidatePath("/", "layout");
+  
   return NextResponse.json({ ok: true, active_theme: all.active_theme });
 }
