@@ -227,11 +227,14 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
           <div className="w-full max-w-md flex flex-col items-center gap-6 md:gap-8 mt-4 md:mt-12">
             
             {/* Main Invitation Card */}
-            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl flex flex-col items-center text-center">
+            <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl flex flex-col items-center text-center">
               
               {/* Header */}
               <div className="space-y-3 mb-6">
-                <h1 className={`text-5xl md:text-6xl font-serif text-white tracking-wide drop-shadow-lg ${isAr ? "font-arabic" : ""}`}>
+                <h1 
+                  className={`text-5xl md:text-6xl font-serif tracking-wide drop-shadow-lg ${isAr ? "font-arabic" : ""}`}
+                  style={{ color: theme.swatch.primary }}
+                >
                   {coupleName}
                 </h1>
                 <p className="text-white/80 text-xs md:text-sm tracking-[0.2em] uppercase font-medium">
@@ -247,7 +250,12 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
                   <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium mb-1">
                     {isAr ? "مرحباً" : "Welcome"}
                   </p>
-                  <h2 className="text-2xl md:text-3xl font-serif font-medium text-white drop-shadow-md">{familyName}</h2>
+                  <h2 
+                    className="text-2xl md:text-3xl font-serif font-medium drop-shadow-md"
+                    style={{ color: theme.swatch.primary }}
+                  >
+                    {familyName}
+                  </h2>
                 </div>
                 
                 <div className="flex items-center justify-center gap-3 text-sm font-medium">
@@ -260,7 +268,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
             </div>
 
             {/* Event Details Card */}
-            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl">
+            <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl">
               <div className="flex items-center gap-2 mb-3">
                 <CalendarIcon className="w-5 h-5 text-white/80" />
                 <span className="font-medium text-lg text-white">{isAr ? mockDate.ar : mockDate.en}</span>
@@ -275,7 +283,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
             </div>
 
             {/* Entrance Pass Card */}
-            <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl flex flex-col items-center">
+            <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl flex flex-col items-center">
               <div className="flex items-center justify-center gap-2 mb-4 w-full">
                 <div className="h-px bg-white/20 w-12" />
                 <span className="text-[10px] uppercase tracking-[0.2em] text-white/60 font-medium">

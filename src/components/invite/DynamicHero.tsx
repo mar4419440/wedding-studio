@@ -7,7 +7,7 @@ import type { SettingsMap } from "@/lib/settings";
 import { GuestQrCard } from "./GuestQrCard";
 import { WeddingCalendar } from "./WeddingCalendar";
 import { HeroBackground } from "@/components/ui/HeroBackground";
-import { DEFAULT_THEME } from "@/lib/themes";
+import { DEFAULT_THEME, getTheme } from "@/lib/themes";
 
 interface DynamicHeroProps {
   family: {
@@ -31,6 +31,7 @@ export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = tru
   const previewTheme = useUi((s) => s.previewTheme);
   const routeTheme = useUi((s) => s.routeTheme);
   const activeTheme = previewTheme || routeTheme || settings.active_theme || DEFAULT_THEME;
+  const theme = getTheme(activeTheme) || getTheme(DEFAULT_THEME)!;
 
   const [rsvpStatus, setRsvpStatus] = useState(family.rsvpStatus);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -79,11 +80,14 @@ export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = tru
         <div className="w-full max-w-md flex flex-col items-center gap-6 md:gap-8 mt-4 md:mt-12">
           
           {/* Main Invitation Card */}
-          <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl flex flex-col items-center text-center">
+          <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl flex flex-col items-center text-center">
             
             {/* Header */}
             <div className="space-y-3 mb-6">
-              <h1 className={`text-5xl md:text-6xl font-serif text-white tracking-wide drop-shadow-lg ${isAr ? 'font-arabic' : ''}`}>
+              <h1 
+                className={`text-5xl md:text-6xl font-serif tracking-wide drop-shadow-lg ${isAr ? 'font-arabic' : ''}`}
+                style={{ color: theme.swatch.primary }}
+              >
                 {coupleName}
               </h1>
               <p className="text-white/80 text-xs md:text-sm tracking-[0.2em] uppercase font-medium">
@@ -99,7 +103,12 @@ export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = tru
                 <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium mb-1">
                   {isAr ? "مرحباً" : "Welcome"}
                 </p>
-                <h2 className="text-2xl md:text-3xl font-serif font-medium text-white drop-shadow-md">{familyName}</h2>
+                <h2 
+                  className="text-2xl md:text-3xl font-serif font-medium drop-shadow-md"
+                  style={{ color: theme.swatch.primary }}
+                >
+                  {familyName}
+                </h2>
               </div>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm font-medium">
@@ -127,7 +136,7 @@ export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = tru
           </div>
 
           {/* Calendar & Venue Card */}
-          <div className="w-full">
+          <div className="w-full opacity-90 hover:opacity-100 transition-opacity">
             <WeddingCalendar 
               weddingDateStr={settings.wedding_date_en} 
               timeEn={settings.wedding_time_en}
@@ -138,7 +147,7 @@ export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = tru
           </div>
 
           {/* Entrance Pass Card */}
-          <div className="w-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl">
+          <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl">
             <div className="flex items-center justify-center gap-2 mb-4">
               <div className="h-px bg-white/20 w-12" />
               <span className="text-[10px] uppercase tracking-[0.2em] text-white/60 font-medium">
