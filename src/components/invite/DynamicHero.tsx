@@ -76,8 +76,8 @@ export function DynamicHero({ family, settings, qrCodeDataUrl, hasEnvelope = tru
       {/* Content Overlay */}
       <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-start p-4 py-12 md:py-20">
         
-        {/* Main Single Card Container (20% Opacity) */}
-        <div className="w-full max-w-md flex flex-col items-center bg-black/20 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl mt-4 md:mt-12 gap-8 text-center">
+        {/* Main Single Card Container (20% Opacity, No Blur) */}
+        <div className="w-full max-w-md flex flex-col items-center bg-black/20 border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl mt-4 md:mt-12 gap-8 text-center">
           
           {/* 1. Header & Guest Info */}
           <div className="w-full flex flex-col items-center">
