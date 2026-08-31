@@ -26,7 +26,11 @@ export function HeroBackground({ activeThemeId }: HeroBackgroundProps) {
 }
 
 function ThemeMediaLayer({ theme, isActive }: { theme: ThemeMeta; isActive: boolean }) {
-  const { type, src, poster, overlay } = theme.heroMedia;
+  const overlay = theme.heroMedia.overlay;
+  const src = theme.curtainSrc || theme.heroMedia.src;
+  const poster = theme.curtainPoster || theme.heroMedia.poster;
+  const type = theme.curtainSrc ? "video" : theme.heroMedia.type;
+  
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
