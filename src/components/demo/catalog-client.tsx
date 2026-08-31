@@ -36,8 +36,8 @@ export function CatalogClient() {
       <main className="mx-auto max-w-6xl px-5 pb-24 pt-10 md:pt-16">
         <h1 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight md:text-5xl">
           {language === "en"
-            ? "Six designs. One wedding."
-            : "ستة تصاميم. حفل زفاف واحد."}
+            ? "Multiple designs. One wedding."
+            : "تصاميم متعددة. حفل زفاف واحد."}
         </h1>
         <p className="mt-4 max-w-xl text-base leading-relaxed text-stone-500">
           {language === "en"

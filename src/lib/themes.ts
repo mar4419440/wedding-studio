@@ -5,7 +5,13 @@ export type ThemeId =
   | "paper-terracotta"
   | "botanical-hearth"
   | "nocturne-elegance"
-  | "video-lumina";
+  | "video-lumina"
+  | "ethereal-union-1-video"
+  | "ethereal-union-2-video"
+  | "emerald-gilt-video"
+  | "paper-terracotta-video"
+  | "botanical-hearth-video"
+  | "nocturne-elegance-video";
 
 export interface HeroMediaConfig {
   type: "image" | "video";
@@ -36,6 +42,11 @@ export interface ThemeMeta {
   swatch: { surface: string; primary: string; secondary: string };
   typography: TypographyConfig;
   heroMedia: HeroMediaConfig;
+  envelopeSrc?: string;
+  envelopeRevealTimestamp?: number | null;
+  qrOverlayPosition?: { top: string; left: string };
+  curtainSrc?: string;
+  curtainPoster?: string;
 }
 
 /**
