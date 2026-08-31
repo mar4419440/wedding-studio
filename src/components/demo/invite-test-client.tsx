@@ -233,13 +233,11 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
         {/* Invitation Content Overlay */}
         <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-start p-4 py-12 md:py-20">
           
-          {/* Main Stack Container */}
-          <div className="w-full max-w-md flex flex-col items-center gap-6 md:gap-8 mt-4 md:mt-12">
+          {/* Main Single Card Container (40% Opacity) */}
+          <div className="w-full max-w-md flex flex-col items-center bg-black/40 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl mt-4 md:mt-12 gap-8 text-center">
             
-            {/* Main Invitation Card */}
-            <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-[2rem] shadow-2xl flex flex-col items-center text-center">
-              
-              {/* Header */}
+            {/* 1. Header & Guest Info */}
+            <div className="w-full flex flex-col items-center">
               <div className="space-y-3 mb-6">
                 <h1 className={`text-5xl md:text-6xl font-serif text-white tracking-wide drop-shadow-lg ${isAr ? "font-arabic" : ""}`}>
                   {coupleName}
@@ -251,7 +249,6 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
 
               <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mb-6" />
 
-              {/* Guest Info */}
               <div className="space-y-4 w-full">
                 <div>
                   <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium mb-1">
@@ -271,14 +268,16 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
               </div>
             </div>
 
-            {/* Event Details Card */}
-            <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl">
-              <div className="flex items-center gap-2 mb-3">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+            {/* 2. Event Details */}
+            <div className="w-full opacity-90 hover:opacity-100 transition-opacity">
+              <div className="flex items-center justify-center gap-2 mb-3">
                 <CalendarIcon className="w-5 h-5 text-white/80" />
                 <span className="font-medium text-lg text-white">{isAr ? mockDate.ar : mockDate.en}</span>
               </div>
               <div className="space-y-2 text-sm text-white/80">
-                <p className="flex items-center gap-2">
+                <p className="flex items-center justify-center gap-2">
                   <Clock className="w-4 h-4 opacity-80" />
                   {isAr ? mockTime.ar : mockTime.en}
                 </p>
@@ -286,8 +285,10 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
               </div>
             </div>
 
-            {/* Entrance Pass Card */}
-            <div className="w-full bg-black/20 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] shadow-2xl flex flex-col items-center">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+            {/* 3. Entrance Pass */}
+            <div className="w-full flex flex-col items-center">
               <div className="flex items-center justify-center gap-2 mb-4 w-full">
                 <div className="h-px bg-white/20 w-12" />
                 <span className="text-[10px] uppercase tracking-[0.2em] text-white/60 font-medium">
