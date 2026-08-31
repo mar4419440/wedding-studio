@@ -70,7 +70,7 @@ function ThemeMediaLayer({ theme, isActive }: { theme: ThemeMeta; isActive: bool
           muted
           loop
           playsInline
-          preload="auto"
+          preload={isActive ? "auto" : "none"}
         />
       )}
       
