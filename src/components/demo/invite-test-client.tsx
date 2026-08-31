@@ -4,15 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useUi } from "@/store/ui";
 import { THEMES, getTheme, DEFAULT_THEME, type ThemeMeta } from "@/lib/themes";
+import type { SettingsMap } from "@/lib/settings";
 import { HeroBackground } from "@/components/ui/HeroBackground";
 import { Users, CalendarIcon, Clock, RotateCcw, ChevronDown } from "lucide-react";
+
+interface InviteTestClientProps {
+  settings: SettingsMap;
+}
 
 /**
  * A self-contained test page that previews the full invitation flow
  * (envelope reveal → QR overlay → curtain loop hero) for any theme,
  * using mock guest data so no real DB records are needed.
+ * The theme is read from admin settings (active_theme).
  */
-export function InviteTestClient() {
+export function InviteTestClient({ settings }: InviteTestClientProps) {
   const language = useUi((s) => s.language);
   const isAr = language === "ar";
 
@@ -22,14 +28,15 @@ export function InviteTestClient() {
 
   // Video themes are themes that have envelopeSrc defined
   const videoThemes = THEMES.filter((t) => t.envelopeSrc);
-  const defaultVideoTheme = videoThemes[0]?.id ?? DEFAULT_THEME;
 
-  const activeThemeId = routeTheme ?? previewTheme ?? defaultVideoTheme;
+  // Use admin active_theme as the default, same as the real invitation page
+  const activeThemeId = routeTheme ?? previewTheme ?? settings.active_theme ?? DEFAULT_THEME;
   const theme = getTheme(activeThemeId);
+  const hasEnvelope = !!theme?.envelopeSrc;
 
   // --- Envelope intro state ---
   const envelopeRef = useRef<HTMLVideoElement>(null);
-  const [phase, setPhase] = useState<"envelope" | "hero">("envelope");
+  const [phase, setPhase] = useState<"envelope" | "hero">(hasEnvelope ? "envelope" : "hero");
   const [selectorOpen, setSelectorOpen] = useState(false);
 
   const envelopeSrc = theme?.envelopeSrc || "/envelope-open.mp4";
@@ -54,14 +61,18 @@ export function InviteTestClient() {
 
   // When the theme changes, restart the sequence
   useEffect(() => {
-    setPhase("envelope");
-    setTimeout(() => {
-      if (envelopeRef.current) {
-        envelopeRef.current.currentTime = 0;
-        envelopeRef.current.play().catch(console.error);
-      }
-    }, 150);
-  }, [activeThemeId]);
+    if (hasEnvelope) {
+      setPhase("envelope");
+      setTimeout(() => {
+        if (envelopeRef.current) {
+          envelopeRef.current.currentTime = 0;
+          envelopeRef.current.play().catch(console.error);
+        }
+      }, 150);
+    } else {
+      setPhase("hero");
+    }
+  }, [activeThemeId, hasEnvelope]);
 
   // Mock data
   const mockFamily = {
@@ -106,6 +117,30 @@ export function InviteTestClient() {
         {selectorOpen && (
           <div className="absolute top-full right-0 mt-2 w-72 max-h-96 overflow-y-auto bg-black/80 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl p-2">
             <p className="text-xs text-white/50 px-3 py-2 uppercase tracking-wider font-medium">
+              {isAr ? "ثيمات الصور" : "Image Themes"}
+            </p>
+            {THEMES.filter((t) => !t.envelopeSrc).map((t) => (
+              <button
+                key={t.id}
+                onClick={() => {
+                  setPreviewTheme(t.id);
+                  setSelectorOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                  t.id === activeThemeId
+                    ? "bg-white/15 text-white"
+                    : "hover:bg-white/10 text-white/70"
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full shrink-0 border border-white/20" style={{ backgroundColor: t.swatch.primary }} />
+                <div>
+                  <span className="text-sm font-medium block">{isAr ? t.nameAr : t.nameEn}</span>
+                  <span className="text-xs text-white/50">{isAr ? t.taglineAr : t.taglineEn}</span>
+                </div>
+              </button>
+            ))}
+            <div className="my-2 h-px bg-white/10" />
+            <p className="text-xs text-white/50 px-3 py-2 uppercase tracking-wider font-medium">
               {isAr ? "ثيمات الفيديو" : "Video Themes"}
             </p>
             {videoThemes.map((t) => (
@@ -132,16 +167,19 @@ export function InviteTestClient() {
         )}
       </div>
 
-      {/* ── Replay Button (floating top-left) ── */}
-      <button
-        onClick={handleReplay}
-        className="fixed top-4 left-4 z-[60] flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-sm px-4 py-2.5 rounded-xl hover:bg-black/80 transition-colors shadow-lg"
-      >
-        <RotateCcw className="w-4 h-4" />
-        {isAr ? "إعادة التشغيل" : "Replay"}
-      </button>
+      {/* ── Replay Button (floating top-left, only for video themes) ── */}
+      {hasEnvelope && (
+        <button
+          onClick={handleReplay}
+          className="fixed top-4 left-4 z-[60] flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-sm px-4 py-2.5 rounded-xl hover:bg-black/80 transition-colors shadow-lg"
+        >
+          <RotateCcw className="w-4 h-4" />
+          {isAr ? "إعادة التشغيل" : "Replay"}
+        </button>
+      )}
 
-      {/* ── Phase 1: Envelope Intro ── */}
+      {/* ── Phase 1: Envelope Intro (only for video themes) ── */}
+      {hasEnvelope && (
       <div
         className={`fixed inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-700 ${
           phase === "envelope" ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -157,6 +195,7 @@ export function InviteTestClient() {
           onTimeUpdate={handleEnvelopeTimeUpdate}
         />
       </div>
+      )}
 
       {/* ── Phase 2: Hero with Curtain Loop ── */}
       <div
