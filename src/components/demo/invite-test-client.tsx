@@ -241,10 +241,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
               
               {/* Header */}
               <div className="space-y-3 mb-6">
-                <h1 
-                  className={`text-5xl md:text-6xl font-serif tracking-wide drop-shadow-lg ${isAr ? "font-arabic" : ""}`}
-                  style={{ color: theme.swatch.primary }}
-                >
+                <h1 className={`text-5xl md:text-6xl font-serif text-white tracking-wide drop-shadow-lg ${isAr ? "font-arabic" : ""}`}>
                   {coupleName}
                 </h1>
                 <p className="text-white/80 text-xs md:text-sm tracking-[0.2em] uppercase font-medium">
@@ -260,10 +257,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
                   <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium mb-1">
                     {isAr ? "مرحباً" : "Welcome"}
                   </p>
-                  <h2 
-                    className="text-2xl md:text-3xl font-serif font-medium drop-shadow-md"
-                    style={{ color: theme.swatch.primary }}
-                  >
+                  <h2 className="text-2xl md:text-3xl font-serif font-medium text-white drop-shadow-md">
                     {familyName}
                   </h2>
                 </div>
