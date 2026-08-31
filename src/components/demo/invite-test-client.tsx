@@ -1,0 +1,266 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useUi } from "@/store/ui";
+import { THEMES, getTheme, DEFAULT_THEME, type ThemeMeta } from "@/lib/themes";
+import { HeroBackground } from "@/components/ui/HeroBackground";
+import { Users, CalendarIcon, Clock, RotateCcw, ChevronDown } from "lucide-react";
+
+/**
+ * A self-contained test page that previews the full invitation flow
+ * (envelope reveal → QR overlay → curtain loop hero) for any theme,
+ * using mock guest data so no real DB records are needed.
+ */
+export function InviteTestClient() {
+  const language = useUi((s) => s.language);
+  const isAr = language === "ar";
+
+  const previewTheme = useUi((s) => s.previewTheme);
+  const setPreviewTheme = useUi((s) => s.setPreviewTheme);
+  const routeTheme = useUi((s) => s.routeTheme);
+
+  const activeThemeId = routeTheme ?? previewTheme ?? DEFAULT_THEME;
+  const theme = getTheme(activeThemeId);
+
+  // Video themes are themes that have envelopeSrc defined
+  const videoThemes = THEMES.filter((t) => t.envelopeSrc);
+
+  // --- Envelope intro state ---
+  const envelopeRef = useRef<HTMLVideoElement>(null);
+  const [phase, setPhase] = useState<"envelope" | "hero">("envelope");
+  const [selectorOpen, setSelectorOpen] = useState(false);
+
+  const envelopeSrc = theme?.envelopeSrc || "/envelope-open.mp4";
+  const revealTime = theme?.envelopeRevealTimestamp ?? 3.5;
+
+  const handleEnvelopeTimeUpdate = () => {
+    if (envelopeRef.current && envelopeRef.current.currentTime >= revealTime) {
+      setPhase("hero");
+    }
+  };
+
+  const handleReplay = () => {
+    setPhase("envelope");
+    // Small delay to let state settle before replaying
+    setTimeout(() => {
+      if (envelopeRef.current) {
+        envelopeRef.current.currentTime = 0;
+        envelopeRef.current.play().catch(console.error);
+      }
+    }, 100);
+  };
+
+  // When the theme changes, restart the sequence
+  useEffect(() => {
+    setPhase("envelope");
+    setTimeout(() => {
+      if (envelopeRef.current) {
+        envelopeRef.current.currentTime = 0;
+        envelopeRef.current.play().catch(console.error);
+      }
+    }, 150);
+  }, [activeThemeId]);
+
+  // Mock data
+  const mockFamily = {
+    nameEn: "The Al-Rashid Family",
+    nameAr: "عائلة الراشد",
+    guestCount: 4,
+  };
+  const mockCouple = {
+    en: "Amira & Khalid",
+    ar: "أميرة & خالد",
+  };
+  const mockVenue = {
+    en: "The Grand Palace, Amman",
+    ar: "القصر الكبير، عمّان",
+  };
+  const mockDate = {
+    en: "October 14, 2026",
+    ar: "١٤ أكتوبر ٢٠٢٦",
+  };
+  const mockTime = {
+    en: "7:00 PM",
+    ar: "٧:٠٠ مساءً",
+  };
+
+  const familyName = isAr ? mockFamily.nameAr : mockFamily.nameEn;
+  const coupleName = isAr ? mockCouple.ar : mockCouple.en;
+
+  return (
+    <div className="relative w-full min-h-screen bg-black text-white" dir={isAr ? "rtl" : "ltr"}>
+
+      {/* ── Theme Selector (floating top-right) ── */}
+      <div className="fixed top-4 right-4 z-[60]">
+        <button
+          onClick={() => setSelectorOpen(!selectorOpen)}
+          className="flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-sm px-4 py-2.5 rounded-xl hover:bg-black/80 transition-colors shadow-lg"
+        >
+          <span className="w-3 h-3 rounded-full" style={{ backgroundColor: theme?.swatch.primary }} />
+          {theme?.nameEn || "Select Theme"}
+          <ChevronDown className={`w-4 h-4 transition-transform ${selectorOpen ? "rotate-180" : ""}`} />
+        </button>
+
+        {selectorOpen && (
+          <div className="absolute top-full right-0 mt-2 w-72 max-h-96 overflow-y-auto bg-black/80 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl p-2">
+            <p className="text-xs text-white/50 px-3 py-2 uppercase tracking-wider font-medium">
+              {isAr ? "ثيمات الفيديو" : "Video Themes"}
+            </p>
+            {videoThemes.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => {
+                  setPreviewTheme(t.id);
+                  setSelectorOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                  t.id === activeThemeId
+                    ? "bg-white/15 text-white"
+                    : "hover:bg-white/10 text-white/70"
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full shrink-0 border border-white/20" style={{ backgroundColor: t.swatch.primary }} />
+                <div>
+                  <span className="text-sm font-medium block">{isAr ? t.nameAr : t.nameEn}</span>
+                  <span className="text-xs text-white/50">{isAr ? t.taglineAr : t.taglineEn}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* ── Replay Button (floating top-left) ── */}
+      <button
+        onClick={handleReplay}
+        className="fixed top-4 left-4 z-[60] flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white text-sm px-4 py-2.5 rounded-xl hover:bg-black/80 transition-colors shadow-lg"
+      >
+        <RotateCcw className="w-4 h-4" />
+        {isAr ? "إعادة التشغيل" : "Replay"}
+      </button>
+
+      {/* ── Phase 1: Envelope Intro ── */}
+      <div
+        className={`fixed inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-700 ${
+          phase === "envelope" ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <video
+          ref={envelopeRef}
+          src={envelopeSrc}
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          playsInline
+          onTimeUpdate={handleEnvelopeTimeUpdate}
+        />
+      </div>
+
+      {/* ── Phase 2: Hero with Curtain Loop ── */}
+      <div
+        className={`relative w-full min-h-screen transition-opacity duration-700 ease-in-out ${
+          phase === "hero" ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {/* Curtain video background */}
+        <HeroBackground activeThemeId={activeThemeId} />
+
+        {/* Invitation Content Overlay */}
+        <div className="relative z-10 w-full min-h-screen flex items-center justify-center p-4 py-12">
+          <div className="bg-black/30 backdrop-blur-sm border border-white/10 p-6 md:p-8 rounded-3xl shadow-2xl max-w-md w-full flex flex-col items-center gap-6">
+
+            {/* Header */}
+            <div className="text-center space-y-2 mb-2">
+              <h1 className={`text-4xl md:text-5xl font-serif text-white tracking-wide drop-shadow-md ${isAr ? "font-arabic" : ""}`}>
+                {coupleName}
+              </h1>
+              <p className="text-white/90 text-sm tracking-wider uppercase font-medium">
+                {isAr ? "يدعوانكم لحضور حفل زفافهما" : "Invite you to celebrate their wedding"}
+              </p>
+            </div>
+
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+
+            {/* Guest Info */}
+            <div className="text-center space-y-2 w-full">
+              <p className="text-xs uppercase tracking-widest text-white/70 font-medium">
+                {isAr ? "مرحباً" : "Welcome"}
+              </p>
+              <h2 className="text-2xl font-serif font-medium text-white drop-shadow">{familyName}</h2>
+
+              <div className="flex items-center justify-center gap-3 mt-4 text-sm font-medium">
+                <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full border border-white/20 text-white">
+                  <Users className="w-4 h-4" />
+                  <span>{isAr ? `دعوة لـ ${mockFamily.guestCount} أشخاص` : `Reserved for ${mockFamily.guestCount} guests`}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Mock QR Code */}
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-5 rounded-2xl w-full flex flex-col items-center gap-3">
+              <div className="bg-white p-4 rounded-xl shadow-inner">
+                <div className="w-[160px] h-[160px] bg-gray-200 rounded-lg flex items-center justify-center">
+                  <svg viewBox="0 0 100 100" className="w-full h-full p-2">
+                    {/* Simple mock QR pattern */}
+                    <rect x="0" y="0" width="100" height="100" fill="white" />
+                    <rect x="5" y="5" width="25" height="25" fill="black" />
+                    <rect x="70" y="5" width="25" height="25" fill="black" />
+                    <rect x="5" y="70" width="25" height="25" fill="black" />
+                    <rect x="10" y="10" width="15" height="15" fill="white" />
+                    <rect x="75" y="10" width="15" height="15" fill="white" />
+                    <rect x="10" y="75" width="15" height="15" fill="white" />
+                    <rect x="13" y="13" width="9" height="9" fill="black" />
+                    <rect x="78" y="13" width="9" height="9" fill="black" />
+                    <rect x="13" y="78" width="9" height="9" fill="black" />
+                    <rect x="35" y="5" width="5" height="5" fill="black" />
+                    <rect x="45" y="5" width="5" height="5" fill="black" />
+                    <rect x="55" y="5" width="5" height="5" fill="black" />
+                    <rect x="35" y="15" width="5" height="5" fill="black" />
+                    <rect x="50" y="15" width="5" height="5" fill="black" />
+                    <rect x="35" y="35" width="5" height="5" fill="black" />
+                    <rect x="45" y="45" width="10" height="10" fill="black" />
+                    <rect x="60" y="35" width="5" height="5" fill="black" />
+                    <rect x="70" y="45" width="5" height="5" fill="black" />
+                    <rect x="35" y="60" width="5" height="5" fill="black" />
+                    <rect x="45" y="70" width="5" height="5" fill="black" />
+                    <rect x="60" y="60" width="5" height="5" fill="black" />
+                    <rect x="70" y="70" width="25" height="25" fill="black" />
+                    <rect x="75" y="75" width="15" height="15" fill="white" />
+                    <rect x="78" y="78" width="9" height="9" fill="black" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-xs text-white/60 text-center max-w-[250px]">
+                {isAr ? "يرجى إبراز هذا الرمز عند بوابة الدخول" : "Present this QR code at the entrance for check-in"}
+              </p>
+            </div>
+
+            {/* Event Details */}
+            <div className="w-full bg-white/5 rounded-2xl p-5 border border-white/10">
+              <div className="flex items-center gap-2 mb-3">
+                <CalendarIcon className="w-5 h-5 text-white/80" />
+                <span className="font-medium text-lg">{isAr ? mockDate.ar : mockDate.en}</span>
+              </div>
+              <div className="space-y-2 text-sm text-white/80">
+                <p className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  {isAr ? mockTime.ar : mockTime.en}
+                </p>
+                <p>{isAr ? mockVenue.ar : mockVenue.en}</p>
+              </div>
+            </div>
+
+            {/* Test Label */}
+            <div className="w-full text-center">
+              <span className="text-[10px] uppercase tracking-widest text-white/30 font-medium">
+                {isAr ? "معاينة تجريبية" : "Test Preview"}
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

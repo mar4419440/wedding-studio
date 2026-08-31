@@ -50,7 +50,7 @@ export interface ThemeMeta {
 }
 
 /**
- * The six design systems from the Stitch bilingual wedding suite.
+ * The design systems from the Stitch bilingual wedding suite.
  * Tokens live in src/app/themes.css keyed by these ids.
  */
 export const THEMES: ThemeMeta[] = [

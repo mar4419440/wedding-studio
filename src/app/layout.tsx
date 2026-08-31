@@ -40,7 +40,7 @@ const customVariableFont = localFont({
 export const metadata: Metadata = {
   title: "Amira & Khalid — Wedding Platform",
   description:
-    "A bilingual wedding invitation platform with six switchable design themes.",
+    "A bilingual wedding invitation platform with multiple switchable design themes.",
 };
 
 /**
