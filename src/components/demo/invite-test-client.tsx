@@ -6,6 +6,7 @@ import { useUi } from "@/store/ui";
 import { THEMES, getTheme, DEFAULT_THEME, type ThemeMeta } from "@/lib/themes";
 import type { SettingsMap } from "@/lib/settings";
 import { HeroBackground } from "@/components/ui/HeroBackground";
+import { ThemeLoader } from "@/components/ui/ThemeLoader";
 import { Users, CalendarIcon, Clock, RotateCcw, ChevronDown } from "lucide-react";
 
 interface InviteTestClientProps {
@@ -31,13 +32,14 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
 
   // Use admin active_theme as the default, same as the real invitation page
   const activeThemeId = routeTheme ?? previewTheme ?? settings.active_theme ?? DEFAULT_THEME;
-  const theme = getTheme(activeThemeId);
+  const theme = getTheme(activeThemeId) || getTheme(DEFAULT_THEME)!;
   const hasEnvelope = !!theme?.envelopeSrc;
 
   // --- Envelope intro state ---
   const envelopeRef = useRef<HTMLVideoElement>(null);
   const [phase, setPhase] = useState<"envelope" | "hero">(hasEnvelope ? "envelope" : "hero");
   const [selectorOpen, setSelectorOpen] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   const envelopeSrc = theme?.envelopeSrc || "/envelope-open.mp4";
   const revealTime = theme?.envelopeRevealTimestamp ?? 3.5;
@@ -61,6 +63,7 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
 
   // When the theme changes, restart the sequence
   useEffect(() => {
+    setIsReady(false);
     if (hasEnvelope) {
       setPhase("envelope");
       setTimeout(() => {
@@ -72,6 +75,10 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
     } else {
       setPhase("hero");
     }
+    
+    // Fallback if onReady doesn't fire
+    const timer = setTimeout(() => setIsReady(true), 2500);
+    return () => clearTimeout(timer);
   }, [activeThemeId, hasEnvelope]);
 
   // Mock data
@@ -102,6 +109,9 @@ export function InviteTestClient({ settings }: InviteTestClientProps) {
 
   return (
     <div className="relative w-full min-h-screen bg-black text-white" dir={isAr ? "rtl" : "ltr"}>
+      
+      {/* Dynamic Loading Screen */}
+      <ThemeLoader activeThemeId={activeThemeId} coupleName={coupleName} isReady={isReady} />
 
       {/* ── Top-Right Overlay (Theme Selector & Language Toggle) ── */}
       <div className="fixed top-4 right-4 z-[60] flex items-center gap-2">
